@@ -1,4 +1,4 @@
-# 2. Arbeitsplan
+# 3. Arbeitsplan
 Der Arbeitsplan soll helfen Struktur und Ordnung in das Projekt zu bringen. Auf diesem soll außerdem der Fortschritt erkennbar sein.
 
 - [ ] **1. Anforderungsanalyse**
