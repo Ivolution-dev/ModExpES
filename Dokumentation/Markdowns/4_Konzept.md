@@ -14,6 +14,8 @@
 - Crystal für Flash an USB Port
 - Fragestellung (Analoge Eingänge und DAC) von -5V bis +5V oder 0V bis +5V
 
+- USB Zeitgemäß mit usb-c 
+
 - stm32f405, gucken wegen ports
 
 
@@ -23,5 +25,17 @@
 
 
 - Testsoftware Analoge aus und eingänge verbinden, testsoftware
+
+
+
+
+- Fragen:
+    - Wie viel A
+    - 5V Spannungsregler verbinden mit VOUT
+    - Dicke der PCB Lines
+    - BNC Placement
+    - Mikrocontroller Pinouts
+    - Overvolt and Short circut Protection
+    - Sicherungen an den Klemmen ok, wegen Frequenzen oder so
 
 \newpage
