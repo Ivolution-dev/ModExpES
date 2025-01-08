@@ -1,9 +1,5 @@
 # 1. Anforderungen
-
-Das Ziel dieses Projekts ist es ein Board zu entwickeln, welches es vereinfacht Schaltungen aufzubauen und zu testen. Dazu zählt die Implementierung von [Schnittstellen hier]. 
-
-- Grundlegende dinge, basic wofür
-
+Das Ziel dieses Projekts ist es ein Board zu entwickeln, welches es vereinfacht Schaltungen aufzubauen und zu testen. Dazu soll das Board Möglichkeiten haben SPI, I2C, PWM und GPIO extern auf einem Breadboard nutzen zu können. Auf diesem Breadboard kann man dann eine Schaltung aufbauen, welche mit dem PCB getestet werden kann. Das PCB, welches im Umfang dieser Bachelorarbeit entwickelt wird, soll dabei möglichst sicher gegen Fehlschaltungen abgesichert sein.
 
 ## 1.1 Schnittstellen
 |Anzahl  | Beschreibung
@@ -19,7 +15,6 @@ Das Ziel dieses Projekts ist es ein Board zu entwickeln, welches es vereinfacht 
 |1       | Debugger Schnittstelle
 
 ## 1.2 Anforderungsliste
-
 Daraus können wir folgende Anfoderungen festsetzen:
 \begin{enumerate}
 \item Alle genannten Kommunikationsschnittstellen sollten verfügbar und nutzbar sein. 
@@ -33,6 +28,9 @@ Daraus können wir folgende Anfoderungen festsetzen:
 \item Der Anwender soll Zugriff auf 3.3V, 5V und wenn ein Netzteil angeschlossen ist, Netzteilspannung haben.
 \item Das Board soll LED Anzeigelampen für mindestens "USB Verbindung vorhanden", "Spannungsversorgung vorhanden" und "Flash Aktivität" haben.
 \item Es soll einen An/Aus Hauptschalter für das ganze Board geben.
-\end{enumerate}
+\item Das PCB soll bis zu 2A bereitstellen können. Dabei sollen sich die 2A beliebig auf die 5V und 3.3V Spannungsbereitstellung verteilen können. (Bespiel: 5V 2A oder 3.3V 2A oder 5V 1A und 3.3V 1A)
+\item Das PCB darf nicht zu heißt werden können, sodass es zu Verbrennungen kommen kann. (Max: 45 °C)
+\item Das PCB darf nicht dicker als 1.6mm sein.
+\end{enumerate} 
 
 \newpage
