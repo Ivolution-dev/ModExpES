@@ -1,0 +1,26 @@
+Da ich beim PCB Start x und Start y +0,127 angegeben habe, sind die Löcher leider um 0,127 verschoben. 
+Daher die neuen Koordinaten für die Löcher.
+
+Unten Rechts
+159.5 - 0,127 = 159,373
+3.75 - 0,127 = 3,623
+
+Mitte Unten
+7,5 - 0,127 = 7,373
+104 - 0,127 = 103,873
+
+Unten Links
+3.75 - 0,127 = 3,623
+3.75 - 0,127 = 3,623
+
+Oben Rechts
+159.5 - 0,127 = 159,373
+71.5 - 0,127 = 71,373
+
+Oben Mitte 
+54 - 0,127 = 53,873
+72 - 0,127 = 71,873
+
+Oben Links
+3.75 - 0,127 = 3,623
+71.5 - 0,127 = 71,373
