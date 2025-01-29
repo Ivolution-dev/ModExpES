@@ -1,0 +1,91 @@
+/* USER CODE BEGIN Includes */
+#include <stdio.h>
+#include <math.h>
+/* USER CODE END Includes */
+
+/* USER CODE BEGIN PV */
+#define BMP280_I2C_ADDR 0x76  // oder 0x77 wenn SDO high
+#define BMP280_CALIB_REG 0x88
+#define BMP280_CTRL_MEAS 0xF4
+#define BMP280_CONFIG 0xF5
+#define BMP280_PRESS_MSB 0xF7
+#define BMP280_TEMP_MSB 0xFA
+
+typedef struct {
+    uint16_t dig_T1;
+    int16_t dig_T2;
+    int16_t dig_T3;
+} BMP280_Calib;
+
+BMP280_Calib calib_data;
+/* USER CODE END PV */
+
+/* Private function prototypes -----------------------------------------------*/
+/* USER CODE BEGIN PFP */
+void BMP280_Init(void);
+void BMP280_ReadCalibration(void);
+float BMP280_ReadTemperature(void);
+/* USER CODE END PFP */
+
+/* USER CODE BEGIN 4 */
+void BMP280_Init(void) {
+    // Config Mode (Sleep -> Normal Mode)
+    uint8_t ctrl_meas = 0x27;  // Temperatur oversampling x1, Druck oversampling x1, Normal mode
+    HAL_I2C_Mem_Write(&hi2c1, BMP280_I2C_ADDR << 1, BMP280_CTRL_MEAS, 1, &ctrl_meas, 1, 100);
+
+    // Read calibration data
+    BMP280_ReadCalibration();
+}
+
+void BMP280_ReadCalibration(void) {
+    uint8_t calib[6];
+    HAL_I2C_Mem_Read(&hi2c1, BMP280_I2C_ADDR << 1, BMP280_CALIB_REG, 1, calib, 6, 100);
+
+    calib_data.dig_T1 = (uint16_t)(calib[1] << 8) | calib[0];
+    calib_data.dig_T2 = (int16_t)(calib[3] << 8) | calib[2];
+    calib_data.dig_T3 = (int16_t)(calib[5] << 8) | calib[4];
+}
+
+float BMP280_ReadTemperature(void) {
+    uint8_t temp_data[3];
+    int32_t adc_T;
+    float temperature;
+
+    // Read temperature data
+    HAL_I2C_Mem_Read(&hi2c1, BMP280_I2C_ADDR << 1, BMP280_TEMP_MSB, 1, temp_data, 3, 100);
+
+    // Combine bytes
+    adc_T = (int32_t)(((uint32_t)temp_data[0] << 12) |
+                     ((uint32_t)temp_data[1] << 4) |
+                     ((uint32_t)temp_data[2] >> 4));
+
+    // Compensation formula from datasheet
+    int32_t var1, var2;
+
+    var1 = ((((adc_T >> 3) - ((int32_t)calib_data.dig_T1 << 1))) *
+           ((int32_t)calib_data.dig_T2)) >> 11;
+
+    var2 = (((((adc_T >> 4) - ((int32_t)calib_data.dig_T1)) *
+            ((adc_T >> 4) - ((int32_t)calib_data.dig_T1))) >> 12) *
+            ((int32_t)calib_data.dig_T3)) >> 14;
+
+    int32_t t_fine = var1 + var2;
+    temperature = (float)((t_fine * 5 + 128) >> 8) / 100.0f;
+
+    return temperature;
+}
+/* USER CODE END 4 */
+
+/* Modify main loop */
+int main(void) {
+    /* USER CODE BEGIN 2 */
+    BMP280_Init();
+    /* USER CODE END 2 */
+
+    /* Infinite loop */
+    while (1) {
+        /* USER CODE BEGIN 3 */
+        float temp = BMP280_ReadTemperature();
+        HAL_Delay(1000);
+    }
+}

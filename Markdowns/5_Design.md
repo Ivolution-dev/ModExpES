@@ -132,36 +132,90 @@ Der Debugger wurde nach einem von der Hochschule vorgegebenen Pinout entworfen. 
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=0.7\textwidth]{Bilder/Module/GPIO.png}
+    \includegraphics[width=0.5\textwidth]{Bilder/Module/GPIO.png}
     \caption{Blockschaltbild digitale Ein- und Ausgänge}
 \end{figure}
 
-
-
 ### 5.1.8 PWM Ein- und Ausgänge 
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.5\textwidth]{Bilder/Module/PWM_CON.png}
+    \caption{Blockschaltbild PWM Verbinder}
+\end{figure}
 
 ### 5.1.9 I2C Schnittstelle
 
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.5\textwidth]{Bilder/Module/I2C.png}
+    \caption{Blockschaltbild I2C Anschluss}
+\end{figure}
+
 ### 5.1.10 SPI Schnittstelle
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.5\textwidth]{Bilder/Module/SPI.png}
+    \caption{Blockschaltbild SPI Anschluss}
+\end{figure}
 
 ### 5.1.11 Digital Analog Wandler
 
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.5\textwidth]{Bilder/Module/DAC.png}
+    \caption{Blockschaltbild Digital Analog Wandler}
+\end{figure}
+
 ### 5.1.12 Analog Digital Wandler
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1\textwidth]{Bilder/Module/ANALOG_CONVERTER.png}
+    \caption{Blockschaltbild Analog Digital Wandler}
+\end{figure}
 
 ### 5.1.13 Spannungsverbinder
 
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.5\textwidth]{Bilder/Module/PWR_OUT.png}
+    \caption{Blockschaltbild Stromanschlüsse}
+\end{figure}
+
+
 ### 5.1.14 Schraubklemmenverbinder
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Bilder/Module/SCREW_CON.png}
+    \caption{Blockschaltbild Schraubklemmenverbinder}
+\end{figure}
+
 
 ### 5.1.15 BNC Verbinder
 
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.5\textwidth]{Bilder/Module/BNC_CON.png}
+    \caption{Blockschaltbild BNC Verbinder}
+\end{figure}
+
 ### 5.1.16 Mikrocontroller Spannungsversorgung
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Bilder/Module/PWR_CON.png}
+    \caption{Blockschaltbild Mikrocontroller Spannungsversorgung}
+\end{figure}
 
 ### 5.1.17 Mikrocontroller
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=0.8\textwidth]{Bilder/Module/MC.png}
-    \caption{Blockschaltbild Debug Schnittstelle}
+    \includegraphics[width=0.9\textwidth]{Bilder/Module/MC.png}
+    \caption{Blockschaltbild Mikrocontroller}
 \end{figure}
 
 \begin{table}[]
