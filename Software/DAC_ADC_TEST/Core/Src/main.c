@@ -2,142 +2,111 @@
 /**
   ******************************************************************************
   * @file           : main.c
-  * @brief          : Main program body
-  ******************************************************************************
-  * @attention
+  * @brief          : Testprogramm für DAC- und ADC-Kommunikation auf dem ModExpES
   *
-  * Copyright (c) 2025 STMicroelectronics.
-  * All rights reserved.
+  * Dieses Programm testet die Funktionalität des Digital-Analog-Wandlers (DAC)
+  * und des Analog-Digital-Wandlers (ADC) des ModExpES.
+  * Der DAC erzeugt eine analoge Spannung, die an den ADC-Eingang zurückgeführt wird.
+  * Die ausgelesenen ADC-Werte werden zur PWM-Steuerung genutzt, um daraus wieder ein digitales Signal zu erzeugen.
+  * Das digitale Signal kann an PWM1 gemessen werden, während gleichzeitig die On-Board-LED als Ausgabe genutzt wird.
   *
-  * This software is licensed under terms that can be found in the LICENSE file
-  * in the root directory of this software component.
-  * If no LICENSE file comes with this software, it is provided AS-IS.
+  * Aufbau:
+  * DAC1 wird mit ADC1 verbunden. Zusätzlich kann auf dem Breadboard eine weitere Verbindung zu einem Oszilloskop hergestellt werden,
+  * um das Signal zu visualisieren.
   *
-  ******************************************************************************
+  * Ablauf:
+  * - Der DAC gibt eine steigende Spannung (0-3.3V) aus.
+  * - Der ADC misst diese Spannung.
+  * - Die gemessenen Werte werden zur Berechnung des PWM-Signals genutzt.
+  *
+  * Verwendete Peripherien:
+  * - DAC (Digital-Analog-Wandler)
+  * - ADC (Analog-Digital-Wandler)
+  * - PWM (über Timer 3, Kanäle 1 und 4)
+  *
   */
-/* USER CODE END Header */
-/* Includes ------------------------------------------------------------------*/
+
 #include "main.h"
 
-/* Private includes ----------------------------------------------------------*/
-/* USER CODE BEGIN Includes */
-
-/* USER CODE END Includes */
-
-/* Private typedef -----------------------------------------------------------*/
-/* USER CODE BEGIN PTD */
-
-/* USER CODE END PTD */
-
-/* Private define ------------------------------------------------------------*/
-/* USER CODE BEGIN PD */
-
-/* USER CODE END PD */
-
-/* Private macro -------------------------------------------------------------*/
-/* USER CODE BEGIN PM */
-
-/* USER CODE END PM */
-
-/* Private variables ---------------------------------------------------------*/
 ADC_HandleTypeDef hadc1;
-
 DAC_HandleTypeDef hdac;
-
 TIM_HandleTypeDef htim3;
 
-/* USER CODE BEGIN PV */
-
-/* USER CODE END PV */
-
-/* Private function prototypes -----------------------------------------------*/
 void SystemClock_Config(void);
 static void MX_GPIO_Init(void);
 static void MX_DAC_Init(void);
 static void MX_ADC1_Init(void);
 static void MX_TIM3_Init(void);
-/* USER CODE BEGIN PFP */
 
-/* USER CODE END PFP */
 
-/* Private user code ---------------------------------------------------------*/
-/* USER CODE BEGIN 0 */
-
-/* USER CODE END 0 */
-
-/**
-  * @brief  The application entry point.
-  * @retval int
-  */
 int main(void)
 {
+	HAL_Init();
+	SystemClock_Config();
 
-  /* USER CODE BEGIN 1 */
+	MX_GPIO_Init();
+	MX_DAC_Init();
+	MX_ADC1_Init();
+	MX_TIM3_Init();
 
-  /* USER CODE END 1 */
+	uint16_t dac_value = 0;
+	uint16_t adc_value = 0;
 
-  /* MCU Configuration--------------------------------------------------------*/
+	uint16_t adc_min_value = 4095;
+	uint16_t adc_max_value = 0;
 
-  /* Reset of all peripherals, Initializes the Flash interface and the Systick. */
-  HAL_Init();
+	// Starte die PWM-Timer
+	HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_4);
+	HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
 
-  /* USER CODE BEGIN Init */
+	// Starte den DAC und ADC
+	HAL_DAC_Start(&hdac, DAC_CHANNEL_1);
+	HAL_ADC_Start(&hadc1);
 
-  /* USER CODE END Init */
+	while (1)
+	{
+	// Setze den DAC-Wert (0-4095 für 12 Bit)
+	HAL_DAC_SetValue(&hdac, DAC_CHANNEL_1, DAC_ALIGN_12B_R, dac_value);
 
-  /* Configure the system clock */
-  SystemClock_Config();
+	// Starte die ADC-Wandlung
+	HAL_ADC_Start(&hadc1);
 
-  /* USER CODE BEGIN SysInit */
+	// Warte, bis die Wandlung abgeschlossen ist
+	if (HAL_ADC_PollForConversion(&hadc1, 10) == HAL_OK)
+	{
+		// Lese den ADC-Wert aus
+		adc_value = HAL_ADC_GetValue(&hadc1);
+	}
+	// Stoppe den ADC
+	HAL_ADC_Stop(&hadc1);
 
-  /* USER CODE END SysInit */
+	// Erhöhe den DAC-Wert oder setze ihn zurück
+	if (dac_value < 4095) {
+		dac_value++;
+	} else {
+		dac_value = 0;
+	}
 
-  /* Initialize all configured peripherals */
-  MX_GPIO_Init();
-  MX_DAC_Init();
-  MX_ADC1_Init();
-  MX_TIM3_Init();
-  /* USER CODE BEGIN 2 */
+	// Min-Max Rechnung für das PWM-Signal
+	if (adc_min_value > adc_value) {
+		adc_min_value = adc_value;
+	}
+	if (adc_max_value < adc_value) {
+		adc_max_value = adc_value;
+	}
 
-  /* USER CODE END 2 */
-  uint16_t dac_value = 0;
-  uint16_t adc_value = 0;
+	// PWM Signal für die led und PWM1 setzen.
+	if (adc_max_value > adc_min_value) {
+	uint16_t value = (adc_value - adc_min_value) * 4095 / (adc_max_value - adc_min_value);
+		TIM3->CCR4 = value;
+		TIM3->CCR1 = value;
+	} else {
+		TIM3->CCR4 = 0;
+		TIM3->CCR1 = 0;
+	}
 
-  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_4);
-
-
-  HAL_DAC_Start(&hdac, DAC_CHANNEL_1);  // DAC starten
-  HAL_ADC_Start(&hadc1);  // ADC starten
-
-  while (1)
-  {
-      // Setze den DAC-Wert (0-4095 für 12 Bit)
-      HAL_DAC_SetValue(&hdac, DAC_CHANNEL_1, DAC_ALIGN_12B_R, dac_value);
-
-      // Starte die ADC-Wandlung
-      HAL_ADC_Start(&hadc1);
-
-      // Warte, bis die Wandlung abgeschlossen ist
-      if (HAL_ADC_PollForConversion(&hadc1, 10) == HAL_OK)
-      {
-          // Lese den ADC-Wert aus
-          adc_value = HAL_ADC_GetValue(&hadc1);
-      }
-
-      // Stoppe den ADC
-      HAL_ADC_Stop(&hadc1);
-
-      // Erhöhe den DAC-Wert oder setze ihn zurück
-      if (dac_value < 4095) {
-          dac_value++;
-      } else {
-          dac_value = 0;
-      }
-
-      TIM3->CCR4 = adc_value;
-
-      HAL_Delay(1);  // Kleine Verzögerung
-  }
+	HAL_Delay(1);
+	}
 }
 
 /**
@@ -149,12 +118,14 @@ void SystemClock_Config(void)
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
 
-  /** Configure the main internal regulator output voltage
+  /**
+   * Configure the main internal regulator output voltage
   */
   __HAL_RCC_PWR_CLK_ENABLE();
   __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
 
-  /** Initializes the RCC Oscillators according to the specified parameters
+  /**
+  * Initializes the RCC Oscillators according to the specified parameters
   * in the RCC_OscInitTypeDef structure.
   */
   RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
@@ -166,7 +137,8 @@ void SystemClock_Config(void)
     Error_Handler();
   }
 
-  /** Initializes the CPU, AHB and APB buses clocks
+  /**
+   * Initializes the CPU, AHB and APB buses clocks
   */
   RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
                               |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
@@ -188,18 +160,10 @@ void SystemClock_Config(void)
   */
 static void MX_ADC1_Init(void)
 {
-
-  /* USER CODE BEGIN ADC1_Init 0 */
-
-  /* USER CODE END ADC1_Init 0 */
-
   ADC_ChannelConfTypeDef sConfig = {0};
 
-  /* USER CODE BEGIN ADC1_Init 1 */
-
-  /* USER CODE END ADC1_Init 1 */
-
-  /** Configure the global features of the ADC (Clock, Resolution, Data Alignment and number of conversion)
+  /**
+   * Configure the global features of the ADC (Clock, Resolution, Data Alignment and number of conversion)
   */
   hadc1.Instance = ADC1;
   hadc1.Init.ClockPrescaler = ADC_CLOCK_SYNC_PCLK_DIV2;
@@ -218,7 +182,8 @@ static void MX_ADC1_Init(void)
     Error_Handler();
   }
 
-  /** Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
+  /**
+   * Configure for the selected ADC regular channel its corresponding rank in the sequencer and its sample time.
   */
   sConfig.Channel = ADC_CHANNEL_1;
   sConfig.Rank = 1;
@@ -227,10 +192,6 @@ static void MX_ADC1_Init(void)
   {
     Error_Handler();
   }
-  /* USER CODE BEGIN ADC1_Init 2 */
-
-  /* USER CODE END ADC1_Init 2 */
-
 }
 
 /**
@@ -240,19 +201,8 @@ static void MX_ADC1_Init(void)
   */
 static void MX_DAC_Init(void)
 {
-
-  /* USER CODE BEGIN DAC_Init 0 */
-
-  /* USER CODE END DAC_Init 0 */
-
   DAC_ChannelConfTypeDef sConfig = {0};
 
-  /* USER CODE BEGIN DAC_Init 1 */
-
-  /* USER CODE END DAC_Init 1 */
-
-  /** DAC Initialization
-  */
   hdac.Instance = DAC;
   if (HAL_DAC_Init(&hdac) != HAL_OK)
   {
@@ -267,10 +217,6 @@ static void MX_DAC_Init(void)
   {
     Error_Handler();
   }
-  /* USER CODE BEGIN DAC_Init 2 */
-
-  /* USER CODE END DAC_Init 2 */
-
 }
 
 /**
@@ -280,17 +226,9 @@ static void MX_DAC_Init(void)
   */
 static void MX_TIM3_Init(void)
 {
-
-  /* USER CODE BEGIN TIM3_Init 0 */
-
-  /* USER CODE END TIM3_Init 0 */
-
   TIM_MasterConfigTypeDef sMasterConfig = {0};
   TIM_OC_InitTypeDef sConfigOC = {0};
 
-  /* USER CODE BEGIN TIM3_Init 1 */
-
-  /* USER CODE END TIM3_Init 1 */
   htim3.Instance = TIM3;
   htim3.Init.Prescaler = 0;
   htim3.Init.CounterMode = TIM_COUNTERMODE_UP;
@@ -311,15 +249,16 @@ static void MX_TIM3_Init(void)
   sConfigOC.Pulse = 0;
   sConfigOC.OCPolarity = TIM_OCPOLARITY_HIGH;
   sConfigOC.OCFastMode = TIM_OCFAST_DISABLE;
+  if (HAL_TIM_PWM_ConfigChannel(&htim3, &sConfigOC, TIM_CHANNEL_1) != HAL_OK)
+  {
+    Error_Handler();
+  }
   if (HAL_TIM_PWM_ConfigChannel(&htim3, &sConfigOC, TIM_CHANNEL_4) != HAL_OK)
   {
     Error_Handler();
   }
-  /* USER CODE BEGIN TIM3_Init 2 */
 
-  /* USER CODE END TIM3_Init 2 */
   HAL_TIM_MspPostInit(&htim3);
-
 }
 
 /**
@@ -329,20 +268,11 @@ static void MX_TIM3_Init(void)
   */
 static void MX_GPIO_Init(void)
 {
-/* USER CODE BEGIN MX_GPIO_Init_1 */
-/* USER CODE END MX_GPIO_Init_1 */
-
   /* GPIO Ports Clock Enable */
   __HAL_RCC_GPIOA_CLK_ENABLE();
   __HAL_RCC_GPIOB_CLK_ENABLE();
-
-/* USER CODE BEGIN MX_GPIO_Init_2 */
-/* USER CODE END MX_GPIO_Init_2 */
+  __HAL_RCC_GPIOC_CLK_ENABLE();
 }
-
-/* USER CODE BEGIN 4 */
-
-/* USER CODE END 4 */
 
 /**
   * @brief  This function is executed in case of error occurrence.
@@ -350,13 +280,10 @@ static void MX_GPIO_Init(void)
   */
 void Error_Handler(void)
 {
-  /* USER CODE BEGIN Error_Handler_Debug */
-  /* User can add his own implementation to report the HAL error return state */
   __disable_irq();
   while (1)
   {
   }
-  /* USER CODE END Error_Handler_Debug */
 }
 
 #ifdef  USE_FULL_ASSERT
@@ -367,11 +294,5 @@ void Error_Handler(void)
   * @param  line: assert_param error line source number
   * @retval None
   */
-void assert_failed(uint8_t *file, uint32_t line)
-{
-  /* USER CODE BEGIN 6 */
-  /* User can add his own implementation to report the file name and line number,
-     ex: printf("Wrong parameters value: file %s on line %d\r\n", file, line) */
-  /* USER CODE END 6 */
-}
+void assert_failed(uint8_t *file, uint32_t line) { }
 #endif /* USE_FULL_ASSERT */

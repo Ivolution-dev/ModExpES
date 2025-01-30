@@ -1,3 +1,25 @@
+/* USER CODE BEGIN Header */
+/**
+  ******************************************************************************
+  * @file           : main.c
+  * @brief          : Testprogramm zur Steuerung eines Relais und einer LED
+  *
+  * Dieses Programm steuert einen digitalen Ausgang für ein Relais sowie eine LED.
+  * Der Pin PD2 wird dauerhaft auf HIGH gesetzt, um das Relais einzuschalten.
+  * Der Pin PB1 wird periodisch getoggelt, um eine LED blinken zu lassen.
+  *
+  * Aufbau:
+  * -
+  *
+  * Ablauf:
+  * - Das Relais wird dauerhaft aktiviert.
+  * - Die LED wird mit einer Frequenz von 1 Hz ein- und ausgeschaltet.
+  *
+  * Verwendete Peripherien:
+  * - GPIO (PB1 für LED, PD2 für Relais)
+  *
+  */
+
 #include "main.h"
 
 void SystemClock_Config(void);

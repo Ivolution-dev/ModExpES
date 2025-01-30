@@ -1,3 +1,28 @@
+/* USER CODE BEGIN Header */
+/**
+  ******************************************************************************
+  * @file           : main.c
+  * @brief          : Testprogramm zur Steuerung von GPIO-Pins auf dem ModExpES
+  *
+  * Dieses Programm testet die Funktionalität der digitalen GPIO-Ausgänge.
+  * Die Pins PA8, PA9 und PA10 sowie PC0 bis PC4 werden als digitale Ausgänge konfiguriert.
+  * Das Programm setzt alle Pins zunächst auf LOW und schaltet sie anschließend nacheinander auf HIGH.
+  *
+  * Aufbau:
+  * - Schließe GPIO1 bis 8 an einem Ausgabegerät der Wahl an.
+  * - Für diesen Test wurde das Modul H-Brücke V1.0 von der Hochschule Bonn-Rhein-Sieg benutzt.
+  *
+  * Ablauf:
+  * - Alle GPIO-Pins werden initial auf LOW gesetzt.
+  * - Danach werden die Pins PA8, PA9 und PA10 jeweils nacheinander mit einer kurzen Verzögerung auf HIGH gesetzt.
+  * - Anschließend werden die Pins PC0 bis PC4 in gleicher Weise aktiviert.
+  * - Der Vorgang wird kontinuierlich in einer Endlosschleife wiederholt.
+  *
+  * Verwendete Peripherien:
+  * - GPIO (PA8, PA9, PA10, PC0, PC1, PC2, PC3, PC4)
+  *
+  */
+
 #include "main.h"
 
 void SystemClock_Config(void);
@@ -14,8 +39,6 @@ int main(void) {
     SystemClock_Config();
     MX_GPIO_Init();
 
-
-
     while (1) {
         // Alle GPIOs auf GND setzen
         for (int i = 0; i < 3; i++) {
@@ -25,14 +48,15 @@ int main(void) {
             HAL_GPIO_WritePin(gpio_ports_pc[i], gpio_pins_pc[i], GPIO_PIN_RESET);
         }
         HAL_Delay(1000);  // 1 Sekunde warten
-        // GPIOs nacheinander einschalten und anlassen
+
+        // GPIOs nacheinander einschalten
         for (int i = 0; i < 3; i++) {
             HAL_GPIO_WritePin(gpio_ports[i], gpio_pins[i], GPIO_PIN_SET);  // Einschalten
-            HAL_Delay(100);  // 1 Sekunde warten
+            HAL_Delay(100);  // Verzögerung
         }
         for (int i = 0; i < 5; i++) {
             HAL_GPIO_WritePin(gpio_ports_pc[i], gpio_pins_pc[i], GPIO_PIN_SET);  // Einschalten
-            HAL_Delay(100);  // 1 Sekunde warten
+            HAL_Delay(100);  // Verzögerung
         }
     }
 }

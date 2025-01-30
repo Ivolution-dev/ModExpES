@@ -50030,3 +50030,198 @@ Finished building: default.size.stdout
  
 Finished building: DAC_ADC_TEST.list
  
+11:24:10 **** Incremental Build of configuration Debug for project DAC_ADC_TEST ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F405xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc "../Core/Src/stm32f4xx_hal_msp.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F405xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/stm32f4xx_hal_msp.d" -MT"Core/Src/stm32f4xx_hal_msp.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stm32f4xx_hal_msp.o"
+arm-none-eabi-g++ -o "DAC_ADC_TEST.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Ivo\Documents\GitHub\ModExpES\Software\DAC_ADC_TEST\STM32F405RGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="DAC_ADC_TEST.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: DAC_ADC_TEST.elf
+ 
+arm-none-eabi-size  DAC_ADC_TEST.elf 
+arm-none-eabi-objdump -h -S DAC_ADC_TEST.elf  > "DAC_ADC_TEST.list"
+   text	   data	    bss	    dec	    hex	filename
+  11872	     12	   1732	  13616	   3530	DAC_ADC_TEST.elf
+Finished building: default.size.stdout
+ 
+Finished building: DAC_ADC_TEST.list
+ 
+11:26:11 **** Incremental Build of configuration Debug for project DAC_ADC_TEST ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F405xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-g++ -o "DAC_ADC_TEST.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Ivo\Documents\GitHub\ModExpES\Software\DAC_ADC_TEST\STM32F405RGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="DAC_ADC_TEST.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: DAC_ADC_TEST.elf
+ 
+arm-none-eabi-size  DAC_ADC_TEST.elf 
+arm-none-eabi-objdump -h -S DAC_ADC_TEST.elf  > "DAC_ADC_TEST.list"
+   text	   data	    bss	    dec	    hex	filename
+  11872	     12	   1732	  13616	   3530	DAC_ADC_TEST.elf
+Finished building: default.size.stdout
+ 
+Finished building: DAC_ADC_TEST.list
+ 
+11:31:38 **** Incremental Build of configuration Debug for project DAC_ADC_TEST ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F405xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-g++ -o "DAC_ADC_TEST.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Ivo\Documents\GitHub\ModExpES\Software\DAC_ADC_TEST\STM32F405RGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="DAC_ADC_TEST.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: DAC_ADC_TEST.elf
+ 
+arm-none-eabi-size  DAC_ADC_TEST.elf 
+arm-none-eabi-objdump -h -S DAC_ADC_TEST.elf  > "DAC_ADC_TEST.list"
+   text	   data	    bss	    dec	    hex	filename
+  11888	     12	   1732	  13632	   3540	DAC_ADC_TEST.elf
+Finished building: default.size.stdout
+ 
+Finished building: DAC_ADC_TEST.list
+ 
+11:32:47 **** Incremental Build of configuration Debug for project DAC_ADC_TEST ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F405xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-g++ -o "DAC_ADC_TEST.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Ivo\Documents\GitHub\ModExpES\Software\DAC_ADC_TEST\STM32F405RGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="DAC_ADC_TEST.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: DAC_ADC_TEST.elf
+ 
+arm-none-eabi-size  DAC_ADC_TEST.elf 
+arm-none-eabi-objdump -h -S DAC_ADC_TEST.elf  > "DAC_ADC_TEST.list"
+   text	   data	    bss	    dec	    hex	filename
+  11888	     12	   1732	  13632	   3540	DAC_ADC_TEST.elf
+Finished building: default.size.stdout
+ 
+Finished building: DAC_ADC_TEST.list
+ 
+11:34:30 **** Incremental Build of configuration Debug for project DAC_ADC_TEST ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F405xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-gcc "../Core/Src/stm32f4xx_hal_msp.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F405xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/stm32f4xx_hal_msp.d" -MT"Core/Src/stm32f4xx_hal_msp.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/stm32f4xx_hal_msp.o"
+arm-none-eabi-g++ -o "DAC_ADC_TEST.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Ivo\Documents\GitHub\ModExpES\Software\DAC_ADC_TEST\STM32F405RGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="DAC_ADC_TEST.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: DAC_ADC_TEST.elf
+ 
+arm-none-eabi-size  DAC_ADC_TEST.elf 
+arm-none-eabi-objdump -h -S DAC_ADC_TEST.elf  > "DAC_ADC_TEST.list"
+   text	   data	    bss	    dec	    hex	filename
+  11916	     12	   1732	  13660	   355c	DAC_ADC_TEST.elf
+Finished building: default.size.stdout
+ 
+Finished building: DAC_ADC_TEST.list
+ 
+12:59:16 **** Incremental Build of configuration Debug for project ENC_TEST ****
+make -j16 all 
+arm-none-eabi-size  ENC_TEST.elf 
+   text	   data	    bss	    dec	    hex	filename
+  10496	     12	   1716	  12224	   2fc0	ENC_TEST.elf
+Finished building: default.size.stdout
+ 
+13:53:59 **** Build of configuration Debug for project RELAI_BLINK ****
+make -j16 all 
+arm-none-eabi-size  RELAI_BLINK.elf 
+   text	   data	    bss	    dec	    hex	filename
+   2760	     12	   1572	   4344	   10f8	RELAI_BLINK.elf
+Finished building: default.size.stdout
+ 
+13:54:08 **** Incremental Build of configuration Debug for project RELAI_BLINK ****
+make -j16 all 
+arm-none-eabi-size  RELAI_BLINK.elf 
+   text	   data	    bss	    dec	    hex	filename
+   2760	     12	   1572	   4344	   10f8	RELAI_BLINK.elf
+Finished building: default.size.stdout
+ 
+14:30:16 **** Incremental Build of configuration Debug for project RELAI_BLINK ****
+make -j16 all 
+arm-none-eabi-size  RELAI_BLINK.elf 
+   text	   data	    bss	    dec	    hex	filename
+   2760	     12	   1572	   4344	   10f8	RELAI_BLINK.elf
+Finished building: default.size.stdout
+ 
+14:30:21 **** Incremental Build of configuration Debug for project RELAI_BLINK ****
+make -j16 all 
+arm-none-eabi-size  RELAI_BLINK.elf 
+   text	   data	    bss	    dec	    hex	filename
+   2760	     12	   1572	   4344	   10f8	RELAI_BLINK.elf
+Finished building: default.size.stdout
+ 
+16:21:25 **** Incremental Build of configuration Debug for project DAC_ADC_TEST ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F405xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+../Core/Src/main.c: In function 'MX_TIM3_Init':
+../Core/Src/main.c:126:29: warning: unused variable 'sMasterConfig' [-Wunused-variable]
+  126 |     TIM_MasterConfigTypeDef sMasterConfig = {0};
+      |                             ^~~~~~~~~~~~~
+arm-none-eabi-g++ -o "DAC_ADC_TEST.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Ivo\Documents\GitHub\ModExpES\Software\DAC_ADC_TEST\STM32F405RGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="DAC_ADC_TEST.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: DAC_ADC_TEST.elf
+ 
+arm-none-eabi-size  DAC_ADC_TEST.elf 
+arm-none-eabi-objdump -h -S DAC_ADC_TEST.elf  > "DAC_ADC_TEST.list"
+   text	   data	    bss	    dec	    hex	filename
+  11536	     12	   1732	  13280	   33e0	DAC_ADC_TEST.elf
+Finished building: default.size.stdout
+ 
+Finished building: DAC_ADC_TEST.list
+ 
+16:23:26 **** Incremental Build of configuration Debug for project DAC_ADC_TEST ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F405xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-g++ -o "DAC_ADC_TEST.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Ivo\Documents\GitHub\ModExpES\Software\DAC_ADC_TEST\STM32F405RGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="DAC_ADC_TEST.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: DAC_ADC_TEST.elf
+ 
+arm-none-eabi-size  DAC_ADC_TEST.elf 
+arm-none-eabi-objdump -h -S DAC_ADC_TEST.elf  > "DAC_ADC_TEST.list"
+   text	   data	    bss	    dec	    hex	filename
+  11916	     12	   1732	  13660	   355c	DAC_ADC_TEST.elf
+Finished building: default.size.stdout
+ 
+Finished building: DAC_ADC_TEST.list
+ 
+16:44:52 **** Incremental Build of configuration Debug for project DAC_ADC_TEST ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F405xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-g++ -o "DAC_ADC_TEST.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Ivo\Documents\GitHub\ModExpES\Software\DAC_ADC_TEST\STM32F405RGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="DAC_ADC_TEST.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: DAC_ADC_TEST.elf
+ 
+arm-none-eabi-size  DAC_ADC_TEST.elf 
+arm-none-eabi-objdump -h -S DAC_ADC_TEST.elf  > "DAC_ADC_TEST.list"
+   text	   data	    bss	    dec	    hex	filename
+  11916	     12	   1732	  13660	   355c	DAC_ADC_TEST.elf
+Finished building: default.size.stdout
+ 
+Finished building: DAC_ADC_TEST.list
+ 
+20:04:09 **** Incremental Build of configuration Debug for project RELAI_BLINK ****
+make -j16 all 
+arm-none-eabi-size  RELAI_BLINK.elf 
+   text	   data	    bss	    dec	    hex	filename
+   2760	     12	   1572	   4344	   10f8	RELAI_BLINK.elf
+Finished building: default.size.stdout
+ 
+20:06:28 **** Build of configuration Debug for project LED_BLINK ****
+make -j16 all 
+arm-none-eabi-size  LED_BLINK.elf 
+   text	   data	    bss	    dec	    hex	filename
+   2760	     12	   1572	   4344	   10f8	LED_BLINK.elf
+Finished building: default.size.stdout
+ 
+21:10:24 **** Build of configuration Debug for project GPIO_TEST ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F405xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-g++ -o "GPIO_TEST.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Ivo\Documents\GitHub\ModExpES\Software\GPIO_TEST\STM32F405RGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="GPIO_TEST.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: GPIO_TEST.elf
+ 
+arm-none-eabi-size  GPIO_TEST.elf 
+arm-none-eabi-objdump -h -S GPIO_TEST.elf  > "GPIO_TEST.list"
+   text	   data	    bss	    dec	    hex	filename
+   2896	     44	   1572	   4512	   11a0	GPIO_TEST.elf
+Finished building: default.size.stdout
+ 
+Finished building: GPIO_TEST.list
+ 
+21:17:49 **** Incremental Build of configuration Debug for project LED_BLINK ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/main.c" -mcpu=cortex-m4 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F405xx -c -I../Core/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc -I../Drivers/STM32F4xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F4xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -fcyclomatic-complexity -MMD -MP -MF"Core/Src/main.d" -MT"Core/Src/main.o" --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -o "Core/Src/main.o"
+arm-none-eabi-g++ -o "LED_BLINK.elf" @"objects.list"   -mcpu=cortex-m4 -T"C:\Users\Ivo\Documents\GitHub\ModExpES\Software\LED_BLINK\STM32F405RGTX_FLASH.ld" --specs=nosys.specs -Wl,-Map="LED_BLINK.map" -Wl,--gc-sections -static --specs=nano.specs -mfpu=fpv4-sp-d16 -mfloat-abi=hard -mthumb -Wl,--start-group -lc -lm -lstdc++ -lsupc++ -Wl,--end-group
+Finished building target: LED_BLINK.elf
+ 
+arm-none-eabi-size  LED_BLINK.elf 
+arm-none-eabi-objdump -h -S LED_BLINK.elf  > "LED_BLINK.list"
+   text	   data	    bss	    dec	    hex	filename
+   2760	     12	   1572	   4344	   10f8	LED_BLINK.elf
+Finished building: default.size.stdout
+ 
+Finished building: LED_BLINK.list
+ 

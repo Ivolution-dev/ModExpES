@@ -5,4 +5,4 @@
 ../Core/Src/stm32f4xx_hal_msp.c:184:6:HAL_DAC_MspDeInit	2
 ../Core/Src/stm32f4xx_hal_msp.c:212:6:HAL_TIM_PWM_MspInit	2
 ../Core/Src/stm32f4xx_hal_msp.c:229:6:HAL_TIM_MspPostInit	2
-../Core/Src/stm32f4xx_hal_msp.c:261:6:HAL_TIM_PWM_MspDeInit	2
+../Core/Src/stm32f4xx_hal_msp.c:270:6:HAL_TIM_PWM_MspDeInit	2

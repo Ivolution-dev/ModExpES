@@ -1,9 +1,10 @@
 LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/arch=x86_64
 LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/name=Local
 LaunchTargetManager/org.eclipse.launchbar.core.launchTargetType.local,Local/os=win32
-configDescList=org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:RELAI_BLINK Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:GPIO_TEST Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:LED_BLINK Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:I2C_BMP280 Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:ENC_TEST Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:PWM_TEST Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:DAC_ADC_TEST Debug
+configDescList=org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:I2C_BMP280 Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:PWM_TEST Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:ENC_TEST Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:DAC_ADC_TEST Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:RELAI_BLINK Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:GPIO_TEST Debug,org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:LED_BLINK Debug
 eclipse.preferences.version=1
 org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:DAC_ADC_TEST\ Debug/activeLaunchMode=run
+org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:DAC_ADC_TEST\ Debug/activeLaunchTarget=null\:---
 org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:Example_BMP280\ Debug/activeLaunchMode=debug
 org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:GPIO_TEST\ Debug/activeLaunchMode=run
 org.eclipse.cdt.dsf.gdb.gdbRemotedescriptorType\:GPIO_TEST\ Debug/activeLaunchTarget=null\:---
