@@ -1,10 +1,10 @@
-12:59:16 **** Incremental Build of configuration Debug for project ENC_TEST ****
+20:56:50 **** Incremental Build of configuration Debug for project ENC_TEST ****
 make -j16 all 
 arm-none-eabi-size  ENC_TEST.elf 
    text	   data	    bss	    dec	    hex	filename
-  10496	     12	   1716	  12224	   2fc0	ENC_TEST.elf
+  10624	     12	   1716	  12352	   3040	ENC_TEST.elf
 Finished building: default.size.stdout
  
 
-12:59:16 Build Finished. 0 errors, 0 warnings. (took 260ms)
+20:56:50 Build Finished. 0 errors, 0 warnings. (took 261ms)
 
