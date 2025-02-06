@@ -29,6 +29,11 @@ pause
 STM32_Programmer_CLI -c port=USB1 -d .\Software\I2C_BMP280\Debug\I2C_BMP280.elf
 
 echo.
+echo *** Taste drücken für UART öffnen ***
+pause
+putty -serial COM4 -sercfg 9600,8,n,1,N
+
+echo.
 echo *** Taste drücken für den SPI Test ***
 pause
 STM32_Programmer_CLI -c port=USB1 -d .\Software\SPI_TEST\Debug\SPI_TEST.elf
