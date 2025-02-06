@@ -136,6 +136,9 @@ Der Debugger wurde nach einem von der Hochschule vorgegebenen Pinout entworfen. 
     \caption{Blockschaltbild digitale Ein- und Ausgänge}
 \end{figure}
 
+
+
+
 ### 5.1.8 PWM Ein- und Ausgänge 
 
 \begin{figure}[h!]
@@ -218,7 +221,7 @@ Der Debugger wurde nach einem von der Hochschule vorgegebenen Pinout entworfen. 
     \caption{Blockschaltbild Mikrocontroller}
 \end{figure}
 
-\begin{table}[]
+\begin{table}[H]
 \centering
 \begin{tabular}{|l|l|lll}
 \cline{1-2} \cline{4-5}
@@ -244,18 +247,70 @@ NRST & RESET        &                       &                            &      
 \end{tabular}
 \caption{Pinout ModExpES}
 \end{table}
-
-
-
-
+ 
 ### 5.1.18 Montageplatte
 
-### 5.1.19 Kühlung
+Die Montageplatte soll das selbst designte PCB mit dem Breadboard verbinden. Als Auswahlkriterium muss ein Material gewählt werden, welches bestimmte Anforderungen erfüllt. Zum einen muss dieses mit dem Lasercutter der Hochschule geschnitten werden können. Ebenfalls darf die Dicke der Montageplatte nicht mehr als 2 mm betragen, da die Schrauben, die das PCB mit der Montageplatte verbinden, nicht länger als 4 mm sind. Zudem sollte das Material möglichst starr sein, um die nötige Stabilität für das PCB und das Breadboard zu bieten.
 
-### 5.1.20 Montageplatte
+Ein Material welches diese Anforderungen erfüllt ist zum Beispiel orginales Plexiglas. Dieses kann nicht nur mit dem Lasercutter sauber geschnitten werden, sondern bietet auch die nötige stabilität und ist in vielen Farben verfügbar.
+
+Meine Wahl fällt auf durchsichtiges Plexiglas, damit, falls ein Kurzschluss oder sonstige Probleme auf dem PCB auftreten, diese auch von hinten begutachtet werden können. Außerdem passt es designtechnisch gut zu dem weißen Stil des ganzen Projekts.
+
+Die genaue technische Zeichnung der Montageplatte findet man in 8.2.
+
+### 5.1.19 Kühlung
 
 
 
 ## 5.2 Softwaredesign
+Die Software wurde, wie im Konzept vorgeschlagen, in der STM32CubeIDE entwickelt. Die Tests können geöffnet werden, indem der Ordner "Software" als Workspace in der IDE geöffnet wird. Man bekommt dann die acht Softwaretests, welche sich nach dem Aufspielen so verhalten, wie im Code und in der Dokumentation beschrieben. Die Tests können ebenfalls als Basis für zukünftige Softwareentwicklungen dienen und gleichzeitig zeigen, was das Board leisten kann.
+
+### 5.2.1 DAC_ADC_TEST
+Dieser Test überprüft die Funktionalität des Digital-Analog-Wandlers (DAC) und des Analog-Digital-Wandlers (ADC). Ziel ist es, das durch den DAC erzeugte Signal mithilfe des ADC zu messen und zur Visualisierung das Signal erneut als PWM-Signal auszugeben.
+
+**Versuchsaufbau:**
+Der DAC gibt eine kontinuierlich steigende Spannung im Bereich von 0 bis 3,3 V aus. Diese Spannung wird direkt mit dem ADC-Eingang verbunden, sodass der ADC sie messen kann. Zusätzlich kann die Spannung auf dem Breadboard zu einem Oszilloskop weitergeleitet werden, um den Signalverlauf zu visualisieren. Das gemessene ADC-Signal wird genutzt, um ein PWM-Signal über Timer 3 (Kanäle 1 und 4) zu erzeugen. Dieses PWM-Signal kann auf dem Ausgang PWM1 wieder mit einem Oszilloskop gemessen werden, während die On-Board-LED ebenfalls entsprechend angesteuert wird.
+
+### 5.2.2 ENC_TEST
+
+### 5.2.3 GPIO_TEST
+
+### 5.2.4 I2C_BMP280
+
+### 5.2.5 LED_BLINK
+
+### 5.2.6 PWM_TEST
+
+### 5.2.7 RELAI_BLINK
+
+
+**Versuchsaufbau:**
+Der DAC gibt eine kontinuierlich steigende Spannung im Bereich von 0 bis 3,3 V aus. Diese Spannung wird direkt mit dem ADC-Eingang verbunden, sodass der ADC sie messen kann. Zusätzlich kann die Spannung auf dem Breadboard zu einem Oszilloskop weitergeleitet werden, um den Signalverlauf zu visualisieren. Das gemessene ADC-Signal wird genutzt, um ein PWM-Signal über Timer 3 (Kanäle 1 und 4) zu erzeugen. Dieses PWM-Signal kann auf dem Ausgang PWM1 wieder mit einem Oszilloskop gemessen werden, während die On-Board-LED ebenfalls entsprechend angesteuert wird.
+
+## 5.3 Kosten
+
+Da dieses Board für die Entwicklung und den Einsatz an der Hochschule vorgesehen ist, sollen die Kosten pro Board möglichst gering gehalten werden. Daher sind alle Kosten in der folgenden Tabelle zusammengefasst, um einen Überblick über die Ausgaben zu bieten.
+
+\begin{table}[H]
+\hspace{-3cm}
+\begin{tabular}{|lllll|l|}
+\hline
+\multicolumn{1}{|l|}{\textbf{Produkt}} & \multicolumn{1}{l|}{\textbf{Preis}} & \multicolumn{1}{l|}{\textbf{Stückzahl}} & \multicolumn{1}{l|}{\textbf{Stückpreis}} & \textbf{Menge pro Produkt} & \textbf{Kosten pro Produkt} \\ \hline
+\multicolumn{1}{|l|}{PCB}              & \multicolumn{1}{l|}{161,18 €}       & \multicolumn{1}{l|}{5}                  & \multicolumn{1}{l|}{32,24 €}             & 1                          & 32,24 €                     \\ \hline
+\multicolumn{1}{|l|}{Breadboard}       & \multicolumn{1}{l|}{103,04 €}       & \multicolumn{1}{l|}{6}                  & \multicolumn{1}{l|}{17,17 €}             & 2                          & 34,35 €                     \\ \hline
+\multicolumn{1}{|l|}{5mm Standoffs}    & \multicolumn{1}{l|}{9,39 €}         & \multicolumn{1}{l|}{20}                 & \multicolumn{1}{l|}{0,47 €}              & 6                          & 2,82 €                      \\ \hline
+\multicolumn{1}{|l|}{BNC Verbinder}    & \multicolumn{1}{l|}{71,55 €}        & \multicolumn{1}{l|}{10}                 & \multicolumn{1}{l|}{7,16 €}              & 4                          & 28,62 €                     \\ \hline
+\multicolumn{1}{|l|}{M3x4mm Schrauben} & \multicolumn{1}{l|}{6,29 €}         & \multicolumn{1}{l|}{100}                & \multicolumn{1}{l|}{0,06 €}              & 12                         & 0,75 €                      \\ \hline
+\multicolumn{1}{|l|}{Gummi Standoffs}  & \multicolumn{1}{l|}{6,99 €}         & \multicolumn{1}{l|}{12}                 & \multicolumn{1}{l|}{0,58 €}              & 4                          & 2,33 €                      \\ \hline
+\multicolumn{1}{|l|}{Wärmeleitkleber}  & \multicolumn{1}{l|}{6,90 €}         & \multicolumn{1}{l|}{3}                  & \multicolumn{1}{l|}{2,30 €}              & 1                          & 2,30 €                      \\ \hline
+\multicolumn{1}{|l|}{Kühler}           & \multicolumn{1}{l|}{10,15 €}        & \multicolumn{1}{l|}{6}                  & \multicolumn{1}{l|}{1,69 €}              & 2                          & 3,38 €                      \\ \hline
+\multicolumn{1}{|l|}{Sicherungen 1A}   & \multicolumn{1}{l|}{8,97 €}         & \multicolumn{1}{l|}{10}                 & \multicolumn{1}{l|}{0,90 €}              & 1                          & 0,90 €                      \\ \hline
+\multicolumn{1}{|l|}{Sicherungen 2A}   & \multicolumn{1}{l|}{3,99 €}         & \multicolumn{1}{l|}{10}                 & \multicolumn{1}{l|}{0,40 €}              & 1                          & 0,40 €                      \\ \hline
+\multicolumn{1}{|l|}{Acrylglas}        & \multicolumn{1}{l|}{19,81 €}        & \multicolumn{1}{l|}{3}                  & \multicolumn{1}{l|}{6,60 €}              & 1                          & 6,60 €                      \\ \hline
+\multicolumn{5}{|r|}{\textbf{Gesamtausgaben:}}                                                                                                                                                 & \textbf{408,26 €}           \\ \hline
+\multicolumn{5}{|r|}{\textbf{Gesamtkosten pro Produkt:}}                                                                                                                                       & \textbf{114,69 €}           \\ \hline
+\end{tabular}
+\caption{Kostenübersicht der Bauteile}
+\end{table}
 
 

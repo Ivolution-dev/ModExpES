@@ -4,5 +4,6 @@
 - pandoc-3.5-windows-x86_64.msi
 - EasyEDA
 - Datenblätter
+- STM32CubeIDE
 
 \newpage

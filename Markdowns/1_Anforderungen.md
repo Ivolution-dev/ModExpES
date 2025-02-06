@@ -1,7 +1,13 @@
-# 1. Anforderungen
+# 1. Zielsetzung und Anforderungen
+
+## 1.1 Ziel des Projekts
 Das Ziel dieses Projekts ist es ein Board zu entwickeln, welches es vereinfacht Schaltungen aufzubauen und zu testen. Dazu soll das Board Möglichkeiten haben SPI, I2C, PWM und GPIO extern auf einem Breadboard nutzen zu können. Auf diesem Breadboard kann man dann eine Schaltung aufbauen, welche mit dem PCB getestet werden kann. Das PCB, welches im Umfang dieser Bachelorarbeit entwickelt wird, soll dabei möglichst sicher gegen Fehlschaltungen abgesichert sein.
 
-## 1.1 Schnittstellen
+Zusätzlich soll bei diesem Projekt auf die Langlebigkeit geachtet werden, damit dieses Produkt auch in 10 Jahren noch für den Endanwender nutzbar ist. Möglichkeiten, dies zu erreichen, werden im Konzept weiter erläutert.
+
+## 1.2 Anforderungen
+
+### 1.2.1 Schnittstellenanforderungen
 |Anzahl  | Beschreibung
 |:------:|:-------------:
 |1       | Spannungsversorgung
@@ -16,7 +22,7 @@ Das Ziel dieses Projekts ist es ein Board zu entwickeln, welches es vereinfacht 
 |4       | BNC Verbinder
 |6       | Klemmen zur zusätzlichen Übertragung von Strom und Signalen
 
-## 1.2 Anforderungsliste
+### 1.2.2 Anforderungsliste
 Daraus können wir folgende Anfoderungen festsetzen:
 \begin{enumerate}
 \item Alle genannten Kommunikationsschnittstellen sollten verfügbar und nutzbar sein. 
