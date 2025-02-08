@@ -5,5 +5,7 @@
 - EasyEDA
 - Datenblätter
 - STM32CubeIDE
+- STM32CubeProgrammer CLI
+- putty.exe
 
 \newpage

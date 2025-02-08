@@ -1,4 +1,4 @@
-20:04:09 **** Incremental Build of configuration Debug for project RELAI_BLINK ****
+19:53:44 **** Build of configuration Debug for project RELAI_BLINK ****
 make -j16 all 
 arm-none-eabi-size  RELAI_BLINK.elf 
    text	   data	    bss	    dec	    hex	filename
@@ -6,5 +6,5 @@ arm-none-eabi-size  RELAI_BLINK.elf
 Finished building: default.size.stdout
  
 
-20:04:10 Build Finished. 0 errors, 0 warnings. (took 287ms)
+19:53:44 Build Finished. 0 errors, 0 warnings. (took 255ms)
 

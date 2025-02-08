@@ -12,6 +12,8 @@ static void MX_I2C1_Init(void);
 uint16_t size;
 uint8_t Data[256];
 
+uint8_t CDC_Transmit_FS(uint8_t* Buf, uint16_t Len);
+
 void BMP280_Init() {
     uint8_t settings[2];
     settings[0] = 0xF4;

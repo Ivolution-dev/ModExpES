@@ -96,7 +96,6 @@ int main(void) {
     MX_GPIO_Init();
  80001d4:	f000 f81c 	bl	8000210 <MX_GPIO_Init>
 
-    // PB1 (LED) dauerhaft einschalten
     HAL_GPIO_WritePin(GPIOB, GPIO_PIN_1, GPIO_PIN_SET);
  80001d8:	2201      	movs	r2, #1
  80001da:	2102      	movs	r1, #2
@@ -104,14 +103,14 @@ int main(void) {
  80001de:	f000 fc0b 	bl	80009f8 <HAL_GPIO_WritePin>
 
     while (1) {
-        HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);  // PD2 (Relais) toggeln
+        HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
  80001e2:	2104      	movs	r1, #4
  80001e4:	4805      	ldr	r0, [pc, #20]	@ (80001fc <main+0x34>)
  80001e6:	f000 fc20 	bl	8000a2a <HAL_GPIO_TogglePin>
-        HAL_Delay(500);  // 500ms warten
+        HAL_Delay(500);
  80001ea:	f44f 70fa 	mov.w	r0, #500	@ 0x1f4
  80001ee:	f000 f95d 	bl	80004ac <HAL_Delay>
-        HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);  // PD2 (Relais) toggeln
+        HAL_GPIO_TogglePin(GPIOD, GPIO_PIN_2);
  80001f2:	bf00      	nop
  80001f4:	e7f5      	b.n	80001e2 <main+0x1a>
  80001f6:	bf00      	nop
@@ -125,7 +124,6 @@ int main(void) {
 void SystemClock_Config(void) {
  8000200:	b480      	push	{r7}
  8000202:	af00      	add	r7, sp, #0
-    // Wird von CubeMX generiert.
 }
  8000204:	bf00      	nop
  8000206:	46bd      	mov	sp, r7
@@ -148,7 +146,7 @@ static void MX_GPIO_Init(void) {
  8000222:	60da      	str	r2, [r3, #12]
  8000224:	611a      	str	r2, [r3, #16]
 
-    __HAL_RCC_GPIOB_CLK_ENABLE();  // GPIOB aktivieren
+    __HAL_RCC_GPIOB_CLK_ENABLE();
  8000226:	2300      	movs	r3, #0
  8000228:	60bb      	str	r3, [r7, #8]
  800022a:	4b1a      	ldr	r3, [pc, #104]	@ (8000294 <MX_GPIO_Init+0x84>)
@@ -161,7 +159,7 @@ static void MX_GPIO_Init(void) {
  800023a:	f003 0302 	and.w	r3, r3, #2
  800023e:	60bb      	str	r3, [r7, #8]
  8000240:	68bb      	ldr	r3, [r7, #8]
-    __HAL_RCC_GPIOD_CLK_ENABLE();  // GPIOD aktivieren
+    __HAL_RCC_GPIOD_CLK_ENABLE();
  8000242:	2300      	movs	r3, #0
  8000244:	607b      	str	r3, [r7, #4]
  8000246:	4b13      	ldr	r3, [pc, #76]	@ (8000294 <MX_GPIO_Init+0x84>)
@@ -175,7 +173,6 @@ static void MX_GPIO_Init(void) {
  800025a:	607b      	str	r3, [r7, #4]
  800025c:	687b      	ldr	r3, [r7, #4]
 
-    // PB1 als Ausgang für LED konfigurieren
     GPIO_InitStruct.Pin = GPIO_PIN_1;
  800025e:	2302      	movs	r3, #2
  8000260:	60fb      	str	r3, [r7, #12]
@@ -194,7 +191,6 @@ static void MX_GPIO_Init(void) {
  8000274:	4808      	ldr	r0, [pc, #32]	@ (8000298 <MX_GPIO_Init+0x88>)
  8000276:	f000 fa23 	bl	80006c0 <HAL_GPIO_Init>
 
-    // PD2 als Ausgang für Relais konfigurieren
     GPIO_InitStruct.Pin = GPIO_PIN_2;
  800027a:	2304      	movs	r3, #4
  800027c:	60fb      	str	r3, [r7, #12]

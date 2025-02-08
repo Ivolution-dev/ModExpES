@@ -59,9 +59,8 @@ int main(void)
 	HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_4);
 	HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
 
-	// Starte den DAC und ADC
+	// Starte den DAC
 	HAL_DAC_Start(&hdac, DAC_CHANNEL_1);
-	HAL_ADC_Start(&hadc1);
 
 	while (1)
 	{
