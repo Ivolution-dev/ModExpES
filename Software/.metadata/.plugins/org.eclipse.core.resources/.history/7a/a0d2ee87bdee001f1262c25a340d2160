@@ -1,0 +1,101 @@
+/**
+  ******************************************************************************
+  * @file           : main.c
+  * @brief          : Testprogramm für Encoder- und PWM-Steuerung
+  *
+  * Dieses Programm testet die Funktionalität eines Drehgebers (Encoder) und
+  * steuert die PWM-Ausgabe über Timer 3 basierend auf dem Encoderausgang.
+  *
+  * Funktionsweise:
+  * - Ein Drehgeber ist mit Timer 1 als Encoder-Interface verbunden.
+  * - Timer 3 wird zur Erzeugung eines PWM-Signals genutzt.
+  * - Die aktuelle Zählerposition des Encoders wird ausgelesen und direkt
+  *   als PWM-Vergleichswert (CCR) für die Kanäle 1 und 4 von Timer 3 verwendet.
+  *
+  * Verwendete Peripherien:
+  * - Timer 1: Encoder-Modus zur Verarbeitung der Drehimpulse
+  * - Timer 3: PWM-Generierung für die Ausgabe
+  * - GPIO: Initialisierung der benötigten Pins
+  *
+  * Ablauf:
+  * - Initialisierung der Hardware
+  * - Start des Encoders (TIM1) und der PWM-Ausgabe (TIM3)
+  * - Kontinuierliches Auslesen des Encoder-Zählers
+  * - Aktualisierung der PWM-Vergleichswerte basierend auf der Zählerposition
+  *
+  * Hinweis:
+  * - Das PWM-Signal kann zur Ansteuerung von LEDs oder Motoren genutzt werden.
+  * - Der Encoder-Wert wird direkt auf die PWM-Werte übertragen, wodurch eine
+  *   direkte Steuerung durch den Drehgeber möglich ist.
+  *
+  *****************************************************************************/
+
+#include "main.h"
+
+TIM_HandleTypeDef htim1;
+TIM_HandleTypeDef htim3;
+
+void SystemClock_Config(void);
+static void MX_GPIO_Init(void);
+static void MX_TIM1_Init(void);
+static void MX_TIM3_Init(void);
+
+int main(void)
+{
+  HAL_Init();
+
+  SystemClock_Config();
+
+  MX_GPIO_Init();
+  MX_TIM1_Init();
+  MX_TIM3_Init();
+
+  // Starten des Encoders auf Timer 1
+  HAL_TIM_Encoder_Start(&htim1, TIM_CHANNEL_ALL);
+  // Starten der PWM-Ausgabe auf Timer 3, Kanal 1 und 4
+  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_4);
+  HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
+
+  while (1)
+  {
+    // Encoder-Zählerstand auslesen
+    int32_t count  = __HAL_TIM_GET_COUNTER(&htim1);
+
+    // PWM-Vergleichswerte setzen basierend auf Encoder-Wert
+    TIM3->CCR4 = count;
+    TIM3->CCR1 = count;
+
+    // Kurze Verzögerung zur Stabilisierung
+    HAL_Delay(10);
+  }
+}
+
+void SystemClock_Config(void)
+{
+  RCC_OscInitTypeDef RCC_OscInitStruct = {0};
+  RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
+
+  __HAL_RCC_PWR_CLK_ENABLE();
+  __HAL_PWR_VOLTAGESCALING_CONFIG(PWR_REGULATOR_VOLTAGE_SCALE1);
+
+  RCC_OscInitStruct.OscillatorType = RCC_OSCILLATORTYPE_HSI;
+  RCC_OscInitStruct.HSIState = RCC_HSI_ON;
+  RCC_OscInitStruct.HSICalibrationValue = RCC_HSICALIBRATION_DEFAULT;
+  RCC_OscInitStruct.PLL.PLLState = RCC_PLL_NONE;
+  if (HAL_RCC_OscConfig(&RCC_OscInitStruct) != HAL_OK)
+  {
+    Error_Handler();
+  }
+
+  RCC_ClkInitStruct.ClockType = RCC_CLOCKTYPE_HCLK|RCC_CLOCKTYPE_SYSCLK
+                              |RCC_CLOCKTYPE_PCLK1|RCC_CLOCKTYPE_PCLK2;
+  RCC_ClkInitStruct.SYSCLKSource = RCC_SYSCLKSOURCE_HSI;
+  RCC_ClkInitStruct.AHBCLKDivider = RCC_SYSCLK_DIV1;
+  RCC_ClkInitStruct.APB1CLKDivider = RCC_HCLK_DIV1;
+  RCC_ClkInitStruct.APB2CLKDivider = RCC_HCLK_DIV1;
+
+  if (HAL_RCC_ClockConfig(&RCC_ClkInitStruct, FLASH_LATENCY_0) != HAL_OK)
+  {
+    Error_Handler();
+  }
+}

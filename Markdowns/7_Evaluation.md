@@ -1,6 +1,16 @@
 # 7. Evaluation
+Grundsätzlich bin ich mit dem Ergebnis sehr zufrieden. Alle systemkritischen Anforderungen wurden erfüllt, jedoch gab es auch, wie immer, kleine Dinge, die ich im Nachhinein noch besser machen würde. Zunächst bin ich aber sehr zufrieden mit der allgemeinen Planung und Zeitplanung des Projekts, die ich problemlos einhalten konnte. Ebenfalls hat mir mein Arbeitsplan geholfen, Struktur und Planung in das Projekt zu bringen. Zudem hat sich das Design des Boards in den Tests bis auf kleine Ausnahmen sehr bewährt, sodass es grundsätzlich eine sehr gute Grundlage für Experimente bietet und nur wenige nicht kritische Verbesserungen benötigt.
 
-- Das achtung warm nicht sichtbar. 
-- Überspannung hätte noch robuster sein können
-- Klemmen könnten robuster sein oder näher am board
-- 
+Was mich etwas aus der Bahn geworfen hat, war ein Problem mit einem externen Netzteil, dessen Defekt ich zunächst nicht bemerkt hatte. Dieser Defekt führte dazu, dass die 5V-Spannungswandler von zwei Boards durchbrannten. Beim ersten Durchbrennen nahm ich fälschlicherweise an, dass es sich um einen Boarddefekt handelte, da es mein Testboard war. Nachdem jedoch auch ein zweites Board betroffen war, konnte ich diesen Verdacht ausschließen.
+Als ich das Netzteil durchgemessen habe, stellte ich fest, dass es anfangs einen 200V-Peak ausgab und zudem nicht die angegebenen 12V lieferte, sondern teilweise sogar 80V. Das hat meinen 5V-Spannungswandler natürlich zerstört. Glücklicherweise benötigen die betroffenen Boards lediglich einen neuen 5V-Spannungswandler, da der 3.3V-Spannungswandler hinter den 5V-Spannungswandler geschaltet ist. Durch diesen Sicherheitsmechanismus blieb der 3.3V-Spannungswandler unbeschädigt, sodass das Board weiterhin uneingeschränkt über USB-C genutzt werden kann.
+
+Dieses Problem führt mich zu meinem ersten Verbesserungspunkt: Wie in 6.1.14 Testfall 14 erkennbar wurde, ist das Board nicht perfekt gegen Überspannung geschützt. In einer zukünftigen Version würde ich daher mehr Aufmerksamkeit in den Überspannungsschutz legen und diesen gezielt verbessern.
+
+Ein weiterer kleiner kosmetischer Punkt ist, dass das ‚Achtung Warm‘-Zeichen bei den Spannungswandlern nicht sichtbar ist, da an dieser Stelle kein Silkscreen mehr vorhanden ist, weil die Fläche freigelegt wurde. In den 3D-Ansichten war das Symbol sichtbar, weshalb ich fälschlicherweise annahm, dass es automatisch invertiert wird. Da die Spannungswandler jedoch mit einem zusätzlichen Kühlkörper ausgestattet sind und somit kaum warm werden, ist es quasi unmöglich, sich daran zu verbrennen, sodass dies kein wirkliches Problem darstellt.
+
+Zuletzt ist mir beim Experimentieren aufgefallen, dass sich eine Schraube gelöst hat. Ob diese nicht richtig fest war oder ob sie sich später gelöst hat, kann ich leider nicht sagen. Sollte dies jedoch häufiger passieren, lässt sich dieses Problem mit etwas Loctite leicht beheben.
+
+Insgesamt würde ich sagen, dass das Projekt sehr erfolgreich war und bis auf einige Kleinigkeiten optimal funktioniert. Ich bin mir sicher, dass dieses Board eine hervorragende Grundlage für zukünftige Programmieraufgaben für Studierende bietet oder dabei helfen wird, neu designte Schaltkreise zu testen.
+
+
+- SPI PROBLEM REINSCHREIBEN WENN NICHT GELÖST

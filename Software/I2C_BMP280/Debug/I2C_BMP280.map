@@ -5450,29 +5450,29 @@ LOAD C:/ST/STM32CubeIDE_1.17.0/STM32CubeIDE/plugins/com.st.stm32cube.ide.mcu.ext
  .debug_macro   0x00020f6d       0x1c ./USB_DEVICE/App/usbd_desc.o
  .debug_macro   0x00020f89      0x391 ./USB_DEVICE/Target/usbd_conf.o
 
-.debug_line     0x00000000    0x13b68
- .debug_line    0x00000000      0xbad ./Core/Src/main.o
- .debug_line    0x00000bad      0x7c3 ./Core/Src/stm32f4xx_hal_msp.o
- .debug_line    0x00001370      0x850 ./Core/Src/stm32f4xx_it.o
- .debug_line    0x00001bc0      0x579 ./Core/Src/sysmem.o
- .debug_line    0x00002139      0x7fa ./Core/Src/system_stm32f4xx.o
- .debug_line    0x00002933       0x7a ./Core/Startup/startup_stm32f405rgtx.o
- .debug_line    0x000029ad      0xa63 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
- .debug_line    0x00003410      0xd55 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
- .debug_line    0x00004165      0xbef ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
- .debug_line    0x00004d54     0x3ba9 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.o
- .debug_line    0x000088fd     0x154c ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pcd.o
- .debug_line    0x00009e49      0x840 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pcd_ex.o
- .debug_line    0x0000a689      0xdec ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
- .debug_line    0x0000b475     0x1e3e ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_usb.o
- .debug_line    0x0000d2b3      0xef9 ./Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Src/usbd_cdc.o
- .debug_line    0x0000e1ac      0xf73 ./Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_core.o
- .debug_line    0x0000f11f     0x1183 ./Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.o
- .debug_line    0x000102a2      0xa8d ./Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ioreq.o
- .debug_line    0x00010d2f      0xa49 ./USB_DEVICE/App/usb_device.o
- .debug_line    0x00011778      0xaac ./USB_DEVICE/App/usbd_cdc_if.o
- .debug_line    0x00012224      0xb12 ./USB_DEVICE/App/usbd_desc.o
- .debug_line    0x00012d36      0xe32 ./USB_DEVICE/Target/usbd_conf.o
+.debug_line     0x00000000    0x13b6b
+ .debug_line    0x00000000      0xbb0 ./Core/Src/main.o
+ .debug_line    0x00000bb0      0x7c3 ./Core/Src/stm32f4xx_hal_msp.o
+ .debug_line    0x00001373      0x850 ./Core/Src/stm32f4xx_it.o
+ .debug_line    0x00001bc3      0x579 ./Core/Src/sysmem.o
+ .debug_line    0x0000213c      0x7fa ./Core/Src/system_stm32f4xx.o
+ .debug_line    0x00002936       0x7a ./Core/Startup/startup_stm32f405rgtx.o
+ .debug_line    0x000029b0      0xa63 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal.o
+ .debug_line    0x00003413      0xd55 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_cortex.o
+ .debug_line    0x00004168      0xbef ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_gpio.o
+ .debug_line    0x00004d57     0x3ba9 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_i2c.o
+ .debug_line    0x00008900     0x154c ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pcd.o
+ .debug_line    0x00009e4c      0x840 ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_pcd_ex.o
+ .debug_line    0x0000a68c      0xdec ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_hal_rcc.o
+ .debug_line    0x0000b478     0x1e3e ./Drivers/STM32F4xx_HAL_Driver/Src/stm32f4xx_ll_usb.o
+ .debug_line    0x0000d2b6      0xef9 ./Middlewares/ST/STM32_USB_Device_Library/Class/CDC/Src/usbd_cdc.o
+ .debug_line    0x0000e1af      0xf73 ./Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_core.o
+ .debug_line    0x0000f122     0x1183 ./Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ctlreq.o
+ .debug_line    0x000102a5      0xa8d ./Middlewares/ST/STM32_USB_Device_Library/Core/Src/usbd_ioreq.o
+ .debug_line    0x00010d32      0xa49 ./USB_DEVICE/App/usb_device.o
+ .debug_line    0x0001177b      0xaac ./USB_DEVICE/App/usbd_cdc_if.o
+ .debug_line    0x00012227      0xb12 ./USB_DEVICE/App/usbd_desc.o
+ .debug_line    0x00012d39      0xe32 ./USB_DEVICE/Target/usbd_conf.o
 
 .debug_str      0x00000000    0xbbfc7
  .debug_str     0x00000000    0xb76e6 ./Core/Src/main.o

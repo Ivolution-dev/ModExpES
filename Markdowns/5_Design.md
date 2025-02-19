@@ -136,8 +136,24 @@ Der Debugger wurde nach einem von der Hochschule vorgegebenen Pinout entworfen. 
     \caption{Blockschaltbild digitale Ein- und Ausgänge}
 \end{figure}
 
+Die digitalen Ein- und Ausgänge sind mit den Mikrocontroller Pins PA8-10 und PC0-4 mit einem Widerstand direkt verbunden. Ein genaueres Pinout findet man nochmal unter der Sektion "Mikrocontroller". Die Widerstände R18-R25 sollen gegen Kurzschlüsse bzw. Überstrom schützen und begrenzen den Strom auf unter 25 mA pro Pin. Die 25mA Grenze kann aus dem Datenblatt des STM32 unter "Table 12. Current characteristics" entnommen werden.
 
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=1\textwidth]{Bilder/Datenblatt/STM32MAX.png}
+    \caption{Datenblatt STM32 Table 12.}
+\end{figure}
 
+\newpage
+Als Widerstand wurde die Größe 150$\Omega$ gewählt, da dieser der nächstgrößere passende Widerstand aus der E12-Reihe ist.
+
+$R=\frac{ V_{cc} }{ I_{max} }$ wobei $V_{cc}=3.3V$, $I_{max}=25mA$
+
+Für maximal 25mA: $R=\frac{ 3.3V }{ 25mA } = 132\Omega$
+
+Bei 150$\Omega$: $I=\frac{ 3.3V }{ 150\Omega } = 22mA\Omega$
+
+Der Strom ist damit pro Pin auf 22mA begrenzt und kann somit den Mikrocontroller nicht beschädigen.
 
 ### 5.1.8 PWM Ein- und Ausgänge 
 
@@ -147,21 +163,29 @@ Der Debugger wurde nach einem von der Hochschule vorgegebenen Pinout entworfen. 
     \caption{Blockschaltbild PWM Verbinder}
 \end{figure}
 
+Die PWM-Ein- und Ausgänge sind ebenfalls mit einem 150$\Omega$-Widerstand verbunden, um diese abzusichern. Die PWM-Anschlüsse sind an den Pins PC6-9 mit dem Mikrocontroller verbunden. Ein genaueres Pinout findet sich unter der Sektion "Mikrocontroller". Die Berechnung des Widerstands ist dieselbe wie bei den digitalen Ein- und Ausgängen und kann von dort entnommen werden.
+
+\newpage
+
 ### 5.1.9 I2C Schnittstelle
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=0.5\textwidth]{Bilder/Module/I2C.png}
+    \includegraphics[width=0.7\textwidth]{Bilder/Module/I2C.png}
     \caption{Blockschaltbild I2C Anschluss}
 \end{figure}
+
+Die I2C-Schnittstelle wurde nach dem Pinout für Groove-Sensorsysteme entwickelt. Über dieses Pinout ist es möglich, direkt Module in den Header zu stecken, um diese zu nutzen. SCL und SDA wurden über einen 4,7k$\Omega$ Pull-up-Widerstand zu 5V verbunden und haben ebenfalls wieder einen 150$\Omega$ Widerstand, um gegen Kurzschlüsse und Überstrom abgesichert zu sein. Am Mikrocontroller ist SCL an PB8 und SDA an PB9 angeschlossen.
 
 ### 5.1.10 SPI Schnittstelle
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=0.5\textwidth]{Bilder/Module/SPI.png}
+    \includegraphics[width=0.6\textwidth]{Bilder/Module/SPI.png}
     \caption{Blockschaltbild SPI Anschluss}
 \end{figure}
+
+Die SPI-Schnittstelle ist genau wie die I2C-Schnittstelle auf der Pinout-Basis der Groove-Sensorsysteme entwickelt worden. Die Datenleitungen wurden auch über einen 150$\Omega$ Widerstand abgesichert und sind so sicher gegen Kurzschlüsse und Überspannung. Das genaue Pinout am Mikrocontroller kann unter der Sektion 'Mikrocontroller' gefunden werden.
 
 ### 5.1.11 Digital Analog Wandler
 
@@ -171,6 +195,8 @@ Der Debugger wurde nach einem von der Hochschule vorgegebenen Pinout entworfen. 
     \caption{Blockschaltbild Digital Analog Wandler}
 \end{figure}
 
+Der Digital-Analog-Wandler ist an PA4 und PA5 angeschlossen und kann eine Spannung von bis zu 3.3V erzeugen. Die Datenleitungen sind wieder mit einem 150$\Omega$ Widerstand abgesichert und ansonsten direkt mit dem Header verbunden.
+
 ### 5.1.12 Analog Digital Wandler
 
 \begin{figure}[h!]
@@ -179,23 +205,53 @@ Der Debugger wurde nach einem von der Hochschule vorgegebenen Pinout entworfen. 
     \caption{Blockschaltbild Analog Digital Wandler}
 \end{figure}
 
+Der Analog-Digital-Wandler besteht aus zwei Hauptkomponenten: einem Spannungsteiler und einem Operationsverstärker. Da der Spannungsteiler eine hohe Ausgangsimpedanz aufweist, wird vor ihm ein Operationsverstärker geschaltet, um eine niedrige Eingangsimpedanz zu gewährleisten. Diese niedrige Eingangsimpedanz sorgt dafür, dass das Signal durch den Spannungsteiler möglichst wenig beeinflusst wird. Die Wahl der Widerstände lässt sich mit der Spannungsteilerformel berechnen.
+
+$V_{out}=V_{in}*\frac{ R_2 }{ R_1 + R_2 }$, wobei $V_{in}=5V$ und $V_{out}=3.3V$
+
+$\frac{ V_{out} }{ V_{in} }=\frac{ R_2 }{ R_1 + R_2 }$
+
+Damit berechnen wir das erforderliche Verhältnis zwischen den Widerständen.
+
+$\frac{ 3.3V }{ 5V }=\frac{ R_2 }{ R_1 + R_2 }$
+
+$0.66=\frac{ R_2 }{ R_1 + R_2 }$
+
+$0.66*(R_1 + R_2)=R_2$
+
+$0.66*R_1 + 0.66*R_2=R_2$
+
+$0.66*R_1 = R_2 - 0.66*R_2$
+
+$0.66*R_1 = 0.34*R_2$
+
+$R_1 \approx 0.515*R_2$
+
+Damit wissen wir, dass der Widerstand $R_1$ ungefähr 0,515 mal so groß sein muss wie $R_2$. Für $R_1$ wurde $10k\Omega$ gewählt. Um das Verhältnis zu erhalten, müssen wir nun $R_2$ berechnen.
+
+$R_1 = 0.515 * 10k\Omega \approx 5.1k\Omega$
+
+\newpage
+
 ### 5.1.13 Spannungsverbinder
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=0.5\textwidth]{Bilder/Module/PWR_OUT.png}
+    \includegraphics[width=0.4\textwidth]{Bilder/Module/PWR_OUT.png}
     \caption{Blockschaltbild Stromanschlüsse}
 \end{figure}
 
+Die Spannungsverbinder bestehen aus 5V, 3.3V, GND und einem Anschluss für ein externes Netzteil. Sie ermöglichen die Versorgung des Breadboards mit Spannung sowie den Betrieb externer Komponenten.
 
 ### 5.1.14 Schraubklemmenverbinder
 
 \begin{figure}[h!]
     \centering
-    \includegraphics[width=0.8\textwidth]{Bilder/Module/SCREW_CON.png}
+    \includegraphics[width=0.7\textwidth]{Bilder/Module/SCREW_CON.png}
     \caption{Blockschaltbild Schraubklemmenverbinder}
 \end{figure}
 
+Die sechs Schraubklemmenverbinder, die jeweils mit einer 2A-Sicherung pro Leitung abgesichert sind, sind selbstrückstellend. Das heißt, sie unterbrechen den Stromfluss bei Überlast und schützen so die Leiterbahnen auf der Platine vor Schäden. Sobald die Sicherung abkühlt, stellt sie die Verbindung automatisch wieder her. Die Klemmen sind zum Anschließen von externen Netzteilen oder Signalgeneratoren gedacht, um Schrittmotoren oder andere Geräte zu versorgen.
 
 ### 5.1.15 BNC Verbinder
 
@@ -205,6 +261,10 @@ Der Debugger wurde nach einem von der Hochschule vorgegebenen Pinout entworfen. 
     \caption{Blockschaltbild BNC Verbinder}
 \end{figure}
 
+Die BNC-Verbinder dienen dem Anschluss eines Oszilloskops. Die Signale können direkt am Breadboard unter den BNC-Anschlüssen angeschlossen werden, wodurch ein besonders sauberer und übersichtlicher Aufbau ermöglicht wird. Diese Verbinder sorgen für eine saubere Signalübertragung und erleichtern die Messung sowie die Analyse von Schaltungen.
+
+\newpage
+
 ### 5.1.16 Mikrocontroller Spannungsversorgung
 
 \begin{figure}[h!]
@@ -213,6 +273,18 @@ Der Debugger wurde nach einem von der Hochschule vorgegebenen Pinout entworfen. 
     \caption{Blockschaltbild Mikrocontroller Spannungsversorgung}
 \end{figure}
 
+Die Spannungsversorgung wurde gemäß dem Datenblatt umgesetzt. 
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Bilder/Datenblatt/PWRMIC.png}
+    \caption{Ausschnitt STM32 Datenblatt Sektion 5.1.6 Power supply scheme}
+\end{figure}
+
+Erkennbar ist, dass für jeden VDD-Pin ein 100nF Kondensator empfohlen wird, ergänzt durch einen zusätzlichen 4,7µF Kondensator. Ebenso ist für jeden VDDA-Pin ein 100nF Kondensator mit einem zusätzlichen 1µF Kondensator vorgeschrieben.
+
+Da wir außerdem keine Batterie nutzen wollen, wurden VBAT sowie die VSS- und VSSA-Pins mit Masse verbunden.
+
 ### 5.1.17 Mikrocontroller
 
 \begin{figure}[h!]
@@ -220,6 +292,25 @@ Der Debugger wurde nach einem von der Hochschule vorgegebenen Pinout entworfen. 
     \includegraphics[width=0.9\textwidth]{Bilder/Module/MC.png}
     \caption{Blockschaltbild Mikrocontroller}
 \end{figure}
+
+Der Mikrocontroller wurde gemäß den Anforderungen des Datenblatts angeschlossen. Die Kondensatoren C13 und C14 dienen zur Stabilisierung der Mikrocontrollerspannung und wurden entsprechend den Vorgaben aus "Table 16. VCAP_1/VCAP_2 operating conditions" gewählt.
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Bilder/Datenblatt/VCAPS.png}
+    \caption{Datenblatt STM32 Table 16.}
+\end{figure}
+
+Des Weiteren wurde an Pin PD2 das Relais für die externe Spannungsversorgung angeschlossen. Weitere Informationen zu dieser Schaltung sind in Abschnitt 5.1.1 zu finden. Die On-Board-LED wurde an Pin PB1 mit einem 270$\Omega$ Vorwiderstand angeschlossen, um die Helligkeit zu begrenzen. Die Wahl des Widerstands basiert auf denselben Grundlagen wie in Kapitel 5.1.2.
+
+Abschließend musste, um über USB flashen zu können, ein 8 MHz Quarz eingebaut werden. Der Quarz vom ModExpES wurde zusätzlich mit zwei 10pF Kondensatoren stabilisiert.
+ \begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.9\textwidth]{Bilder/Datenblatt/QUARZ.png}
+    \caption{Datenblatt STM32 Fig 32.}
+\end{figure}
+
+
 
 \begin{table}[H]
 \centering
@@ -258,36 +349,32 @@ Meine Wahl fällt auf durchsichtiges Plexiglas, damit, falls ein Kurzschluss ode
 
 Die genaue technische Zeichnung der Montageplatte findet man in 8.2.
 
-### 5.1.19 Kühlung
+### 5.1.19 Leiterbahnen
+Die Berechnung der Breite der Leiterbahnen wird mithilfe der Fläche berechnet.
 
+$A=\left({\frac{ I }{ k*{T_{ Rise }}^{b} }}\right)^{\frac{ 1 }{ c }  }$
 
+Wobei für externe Schichten gemäß IPC-2221 gilt: k=0.048, b=0.44, c=0.725 und $T_{ Rise }$=10°C
 
-## 5.2 Softwaredesign
-Die Software wurde, wie im Konzept vorgeschlagen, in der STM32CubeIDE entwickelt. Die Tests können geöffnet werden, indem der Ordner "Software" als Workspace in der IDE geöffnet wird. Man bekommt dann die acht Softwaretests, welche sich nach dem Aufspielen so verhalten, wie im Code und in der Dokumentation beschrieben. Die Tests können ebenfalls als Basis für zukünftige Softwareentwicklungen dienen und gleichzeitig zeigen, was das Board leisten kann.
+Zur Sicherheit sind alle 2A-Leiterbahnen auf 3A und die 1A-Leiterbahnen auf 2A ausgelegt, da die Sicherungen etwas Zeit zum Durchbrennen benötigen.
 
-### 5.2.1 DAC_ADC_TEST
-Dieser Test überprüft die Funktionalität des Digital-Analog-Wandlers (DAC) und des Analog-Digital-Wandlers (ADC). Ziel ist es, das durch den DAC erzeugte Signal mithilfe des ADC zu messen und zur Visualisierung das Signal erneut als PWM-Signal auszugeben.
+Für 2A: $A=\left({\frac{ 3 }{ 0.048*{{10}}^{0.44} }}\right)^{\frac{ 1 }{ 0.725 } } \approx 74.16$
 
-**Versuchsaufbau:**
-Der DAC gibt eine kontinuierlich steigende Spannung im Bereich von 0 bis 3,3 V aus. Diese Spannung wird direkt mit dem ADC-Eingang verbunden, sodass der ADC sie messen kann. Zusätzlich kann die Spannung auf dem Breadboard zu einem Oszilloskop weitergeleitet werden, um den Signalverlauf zu visualisieren. Das gemessene ADC-Signal wird genutzt, um ein PWM-Signal über Timer 3 (Kanäle 1 und 4) zu erzeugen. Dieses PWM-Signal kann auf dem Ausgang PWM1 wieder mit einem Oszilloskop gemessen werden, während die On-Board-LED ebenfalls entsprechend angesteuert wird.
+Für 1A: $A=\left({\frac{ 2 }{ 0.048*{{10}}^{0.44} }}\right)^{\frac{ 1 }{ 0.725 } } \approx 42.39$
 
-### 5.2.2 ENC_TEST
+Damit kann man die benötigte Breite berechnen.
 
-### 5.2.3 GPIO_TEST
+$W=\frac{A}{t*1.378}$
 
-### 5.2.4 I2C_BMP280
+Für 2A: $W=\frac{74.16}{1*1.378} \approx 53.81mil \approx 1.36mm$
 
-### 5.2.5 LED_BLINK
+Für 1A: $W=\frac{42.39}{1*1.378} \approx 30.76mil \approx 0.78mm$
 
-### 5.2.6 PWM_TEST
+Somit wurde für die 2A-Leiterbahnen eine Breite von 2 mm und für die 1A-Leiterbahnen eine Breite von 1 mm gewählt.
 
-### 5.2.7 RELAI_BLINK
+\newpage 
 
-
-**Versuchsaufbau:**
-Der DAC gibt eine kontinuierlich steigende Spannung im Bereich von 0 bis 3,3 V aus. Diese Spannung wird direkt mit dem ADC-Eingang verbunden, sodass der ADC sie messen kann. Zusätzlich kann die Spannung auf dem Breadboard zu einem Oszilloskop weitergeleitet werden, um den Signalverlauf zu visualisieren. Das gemessene ADC-Signal wird genutzt, um ein PWM-Signal über Timer 3 (Kanäle 1 und 4) zu erzeugen. Dieses PWM-Signal kann auf dem Ausgang PWM1 wieder mit einem Oszilloskop gemessen werden, während die On-Board-LED ebenfalls entsprechend angesteuert wird.
-
-## 5.3 Kosten
+## 5.1.21 Hardwarekosten
 
 Da dieses Board für die Entwicklung und den Einsatz an der Hochschule vorgesehen ist, sollen die Kosten pro Board möglichst gering gehalten werden. Daher sind alle Kosten in der folgenden Tabelle zusammengefasst, um einen Überblick über die Ausgaben zu bieten.
 
@@ -313,4 +400,96 @@ Da dieses Board für die Entwicklung und den Einsatz an der Hochschule vorgesehe
 \caption{Kostenübersicht der Bauteile}
 \end{table}
 
+
+
+## 5.2 Softwaredesign
+Die Software wurde, wie im Konzept vorgeschlagen, in der STM32CubeIDE entwickelt. Die Tests können geöffnet werden, indem der Ordner "Software" als Workspace in der IDE geöffnet wird. Man bekommt dann die acht Softwaretests, welche sich nach dem flashen so verhalten, wie im Code und in der Dokumentation beschrieben. Die Tests können ebenfalls als Basis für zukünftige Softwareentwicklungen dienen und gleichzeitig zeigen, was das Board leisten kann.
+
+### 5.2.1 DAC_ADC_TEST
+Dieser Test testet die Funktionalität des Digital-Analog-Wandlers (DAC) und des Analog-Digital-Wandlers (ADC) des ModExpES. Der DAC erzeugt eine analoge Spannung, die an den ADC-Eingang zurückgeführt wird. Die ausgelesenen ADC-Werte werden zur PWM-Steuerung genutzt, um daraus wieder ein digitales Signal zu erzeugen. Das digitale Signal kann an PWM1 gemessen werden, während gleichzeitig die On-Board-LED als Ausgabe genutzt wird.
+
+**Versuchsaufbau:**
+DAC1 wird mit ADC1 verbunden. Zusätzlich kann auf dem Breadboard eine weitere Verbindung zu einem Oszilloskop hergestellt werden, um das Signal zu visualisieren.
+
+**Ablauf:**\
+- Der DAC gibt eine steigende Spannung (0-3.3V) aus.\
+- Der ADC misst diese Spannung.\
+- Die gemessenen Werte werden zur Berechnung des PWM-Signals genutzt.\
+
+### 5.2.2 ENC_TEST
+Dieser Test testet die Funktionalität eines Drehgebers (Encoder) und steuert die PWM-Ausgabe über Timer 3 basierend auf dem Encoderausgang.
+
+**Versuchsaufbau:**
+Ein Encoder ist mit GPIO1 und GPIO2 verbunden. Zusätzlich kann auf dem Breadboard eine weitere Verbindung zu einem Oszilloskop hergestellt werden, um das Signal zu visualisieren.
+
+**Ablauf:**\
+- Der Encoder wird auf GPIO1 und GPIO2 ausgelesen.\
+- Die Ausgabe erfolgt auf der On-Board LED und dem PWM1 Ausgang.\
+
+### 5.2.3 GPIO_TEST
+Dieser Test testet die Funktionalität der digitalen GPIO-Ausgänge. Die Pins PA8, PA9 und PA10 sowie PC0 bis PC4 werden als digitale Ausgänge konfiguriert. Das Programm setzt alle Pins zunächst auf LOW und schaltet sie anschließend nacheinander auf HIGH.
+
+**Versuchsaufbau:**
+Schließe GPIO1 bis 8 an einem Ausgabegerät der Wahl an. Als Beipsiel wurde in diesen Test das Modul H-Brücke V1.0 von der Hochschule benutzt.
+
+**Ablauf:**\
+- Alle GPIO-Pins werden initial auf LOW gesetzt.\
+- Danach werden die Pins PA8, PA9 und PA10 jeweils nacheinander mit einer kurzen Verzögerung auf HIGH gesetzt.\
+- Anschließend werden die Pins PC0 bis PC4 in gleicher Weise aktiviert.\
+- Der Vorgang wird kontinuierlich in einer Endlosschleife wiederholt.\
+
+### 5.2.4 I2C_BMP280
+Dieser Test liest die Temperaturdaten vom BMP280-Sensor über I2C aus und sendet die Messwerte über die USB-Schnittstelle an den PC.
+
+**Versuchsaufbau:**
+Ein Computer muss per USB-C an das Board angeschlossen werden. Der BMP280 muss außerdem richtig per I2C an das Board angeschlossen werden. Zusätzlich muss der Computer eine Ausgabe über den richtigen COM-Port offen haben.
+
+**Ablauf:**\
+- Initialisiert den BMP280-Sensor.\
+- Liest die Kalibrierungsdaten des Sensors aus.\
+- Holt die Roh-Temperaturwerte und berechnet daraus die Temperatur in °C.\
+- Sendet die Temperaturwerte alle 100 ms über die USB-Schnittstelle.\
+
+### 5.2.5 LED_BLINK
+Dieser Test steuert einen digitalen Ausgang für ein Relais sowie eine LED. Der Pin PD2 wird dauerhaft auf HIGH gesetzt, um das Relais einzuschalten. Der Pin PB1 wird periodisch getoggelt, um die On-Board LED blinken zu lassen.
+
+**Versuchsaufbau:**
+Nicht benötigt.
+
+**Ablauf:**\
+- Das Relais wird dauerhaft aktiviert.\
+- Die LED wird mit einer Frequenz von 1 Hz ein- und ausgeschaltet.\
+
+### 5.2.6 PWM_TEST
+Dieser Test steuert die PWM-Signale auf mehreren Kanälen mit einer kontinuierlichen Änderung der Duty-Cycle-Werte. Die PWM-Signale werden auf den Kanälen TIM3, TIM8 und TIM1 ausgegeben. Die Duty-Cycle-Werte werden in einem Schleifenverfahren von 0 bis 65535 und wieder zurück verändert, um die Geräte der an den Pins und die On-Board LED zu steuern.
+
+**Versuchsaufbau:**
+Beliebiges Ausgabegerät an den PWM Ports anschließen.
+
+**Ablauf:**\
+- Das PWM-Signal wird schrittweise in der Duty-Cycle von 0 auf 65535 erhöht, dann wieder von 65535 auf 0 reduziert, wodurch zum Beispiel eine kontinuierliche Helligkeitsmodulation bei LEDs erzeugt wird.\
+
+### 5.2.7 RELAI_BLINK
+Dieser Test testet das Relai. Die On-Board LED wird eingschaltet und das Relai an PD2 wird alle 500ms umgeschaltet.
+
+**Versuchsaufbau:**
+Nicht benötigt.
+
+**Ablauf:**\
+- PB1 bleibt aktiv, wodurch die LED immer eingeschaltet bleibt.\
+- PD2 wird periodisch alle 500 ms getoggelt, wodurch das Relais blinkt.\
+
+### 5.2.8 SPI_TEST
+Dieser Test steuert einen MCP4922 Digital-Analog-Wandler (DAC) über SPI und liest kontinuierlich den Wert eines ADCs aus, welcher mit dem DAC verbunden ist. Der ADC-Wert wird verwendet, um die PWM-Ausgangswerte auf den Pins PWM1 und der On-Board LED zu steuern, basierend auf dem ADC-Eingang. An PWM1 kann ein Oszilloskop angeschlossen werden, um das Signal zu visualisieren. Die ADC-Werte werden kontinuierlich überwacht, um den minimalen und maximalen Wert zu ermitteln und den PWM-Ausgang entsprechend zu skalieren.
+
+**Versuchsaufbau:**
+Der MCP4922 DAC wird über die SPI-Schnittstelle an das ModExpES angeschlossen. Der Ausgang des DAC, welcher die analoge Spannung erzeugt, wird direkt mit dem ADC4 verbunden. So wird die vom DAC erzeugte Spannung vom ADC4 gemessen. Um das Signal visuell zu überprüfen, kann ein Oszilloskop an den PWM1-Ausgang, sowie den ADC4-Eingang angeschlossen werden.
+
+**Ablauf:**\
+- Der DAC wird in einer Schleife mit Werten zwischen 0 und 4095 beschrieben.\
+- Der ADC wird gestartet und die Werte werden gelesen.\
+- Der minimalste und maximalste ADC-Wert werden ermittelt, um die PWM-Ausgangswerte basierend auf dem aktuellen ADC-Wert zu skalieren.\
+- Die PWM-Werte werden über die On-Board LED und PWM1 ausgegeben.\
+
+\newpage
 

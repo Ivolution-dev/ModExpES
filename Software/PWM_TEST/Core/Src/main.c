@@ -1,3 +1,26 @@
+/**
+  ******************************************************************************
+  * @file           : main.c
+  * @brief          : Testprogramm zur Steuerung eines PWM-Signals auf mehreren Kanälen
+  *
+  * Dieser Test steuert die PWM-Signale auf mehreren Kanälen mit einer kontinuierlichen Änderung
+  * der Duty-Cycle-Werte. Die PWM-Signale werden auf den Kanälen TIM3, TIM8 und TIM1 ausgegeben.
+  * Die Duty-Cycle-Werte werden in einem Schleifenverfahren von 0 bis 65535 und wieder zurück verändert,
+  * um die Geräte der an den Pins und die On-Board LED zu steuern.
+  *
+  * Aufbau:
+  * Beliebiges Ausgabegerät an den PWM Ports anschließen.
+  *
+  * Ablauf:
+  * - Das PWM-Signal wird schrittweise in der Duty-Cycle von 0 auf 65535 erhöht,
+  *   dann wieder von 65535 auf 0 reduziert, wodurch eine kontinuierliche
+  *   Helligkeitsmodulation erzeugt wird.
+  *
+  * Verwendete Peripherien:
+  * - Timer (TIM1, TIM3, TIM4, TIM8 für PWM)
+  *
+  *****************************************************************************/
+
 #include "main.h"
 
 TIM_HandleTypeDef htim1;
@@ -25,6 +48,7 @@ int main(void)
   MX_TIM4_Init();
   MX_TIM8_Init();
 
+  // Starten der PWM-Ausgänge
   HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
   HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_2);
   HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_3);
@@ -35,30 +59,45 @@ int main(void)
 
   while (1)
   {
+      // Schleife zur Erhöhung des Duty-Cycle-Werts von 0 bis 65535
       while(CH1_DC < 65535)
       {
+          // Setze den aktuellen Duty-Cycle-Wert auf die verschiedenen PWM-Kanäle
           TIM3->CCR1 = CH1_DC;
           TIM3->CCR2 = CH1_DC;
           TIM3->CCR3 = CH1_DC;
           TIM8->CCR4 = CH1_DC;
           TIM1->CCR3 = CH1_DC;
+
+          // Erhöhe den Duty-Cycle-Wert um 70 für die nächste Iteration
           CH1_DC += 70;
+
+          // Warte 1 Millisekunde, um die Änderung sichtbar zu machen
           HAL_Delay(1);
       }
+
+      // Schleife zur Verringerung des Duty-Cycle-Werts von 65535 bis 0
       while(CH1_DC > 0)
       {
+          // Setze den aktuellen Duty-Cycle-Wert auf die verschiedenen PWM-Kanäle
           TIM3->CCR1 = CH1_DC;
           TIM3->CCR2 = CH1_DC;
           TIM3->CCR3 = CH1_DC;
           TIM8->CCR4 = CH1_DC;
           TIM1->CCR3 = CH1_DC;
+
+          // Verringere den Duty-Cycle-Wert um 70 für die nächste Iteration
           CH1_DC -= 70;
+
+          // Warte 1 Millisekunde, um die Änderung sichtbar zu machen
           HAL_Delay(1);
       }
   }
 }
 
-
+/**
+  * AUTO GENERATED CODE
+  */
 void SystemClock_Config(void)
 {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};

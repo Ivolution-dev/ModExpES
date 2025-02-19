@@ -1,3 +1,25 @@
+/**
+  ******************************************************************************
+  * @file           : main.c
+  * @brief          : Testprogramm für Encoder- und PWM-Steuerung
+  *
+  * Dieser Test testet die Funktionalität eines Drehgebers (Encoder) und
+  * steuert die PWM-Ausgabe über Timer 3 basierend auf dem Encoderausgang.
+  *
+  * Aufbau:
+  * Ein Encoder ist mit GPIO1 und GPIO2 verbunden. Zusätzlich kann auf dem Breadboard eine weitere Verbindung
+  * zu einem Oszilloskop hergestellt werden, um das Signal zu visualisieren.
+  *
+  * Ablauf:
+  * - Der Encoder wird auf GPIO1 und GPIO2 ausgelesen.
+  * - Die Ausgabe erfolgt auf der On-Board LED und dem PWM1 Ausgang.
+  *
+  * Verwendete Peripherien:
+  * - Timer 1: Encoder-Modus zur Verarbeitung der Drehimpulse
+  * - Timer 3: PWM-Generierung für die Ausgabe
+  *
+  *****************************************************************************/
+
 #include "main.h"
 
 TIM_HandleTypeDef htim1;
@@ -18,20 +40,29 @@ int main(void)
   MX_TIM1_Init();
   MX_TIM3_Init();
 
+  // Starten des Encoders auf Timer 1
   HAL_TIM_Encoder_Start(&htim1, TIM_CHANNEL_ALL);
+  // Starten der PWM-Ausgabe auf Timer 3, Kanal 1 und 4
   HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_4);
   HAL_TIM_PWM_Start(&htim3, TIM_CHANNEL_1);
 
   while (1)
   {
-	int32_t count  = __HAL_TIM_GET_COUNTER(&htim1);
-	TIM3->CCR4 = count;
-	TIM3->CCR1 = count;
+    // Encoder-Zählerstand auslesen
+    int32_t count  = __HAL_TIM_GET_COUNTER(&htim1);
 
-	HAL_Delay(10);
+    // PWM-Vergleichswerte setzen basierend auf Encoder-Wert
+    TIM3->CCR4 = count;
+    TIM3->CCR1 = count;
+
+    // Kurze Verzögerung zur Stabilisierung
+    HAL_Delay(10);
   }
 }
 
+/**
+  * AUTO GENERATED CODE
+  */
 void SystemClock_Config(void)
 {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};

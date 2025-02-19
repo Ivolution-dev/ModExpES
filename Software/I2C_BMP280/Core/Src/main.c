@@ -1,3 +1,28 @@
+/**
+  ******************************************************************************
+  * @file           : main.c
+  * @brief          : Temperaturmessung mit BMP280 über I2C und Ausgabe via USB
+  *
+  * Dieser Test liest die Temperaturdaten vom BMP280-Sensor über I2C aus
+  * und sendet die Messwerte über die USB-Schnittstelle an den PC.
+  *
+  * Aufbau:
+  * Ein Computer muss per USB-C an das Board angeschlossen werden.
+  * Der BMP280 muss richtig per I2C an das Board angeschlossen werden.
+  * Der Computer hat eine Ausgabe über den richtigen COM-Port auf.
+  *
+  * Ablauf:
+  * - Initialisiert den BMP280-Sensor.
+  * - Liest die Kalibrierungsdaten des Sensors aus.
+  * - Holt die Roh-Temperaturwerte und berechnet daraus die Temperatur in °C.
+  * - Sendet die Temperaturwerte alle 100 ms über die USB-Schnittstelle.
+  *
+  * Verwendete Peripherien:
+  * - I2C1 (zur Kommunikation mit dem BMP280)
+  * - USB (Für die Ausgabe der Temperaturwerte)
+  *
+  *****************************************************************************/
+
 #include "main.h"
 #include "usb_device.h"
 
@@ -12,8 +37,14 @@ static void MX_I2C1_Init(void);
 uint16_t size;
 uint8_t Data[256];
 
+uint16_t dig_T1;
+int16_t dig_T2, dig_T3;
+
 uint8_t CDC_Transmit_FS(uint8_t* Buf, uint16_t Len);
 
+/**
+ * @brief Initialisiert den BMP280-Sensor mit Standardkonfiguration.
+ */
 void BMP280_Init() {
     uint8_t settings[2];
     settings[0] = 0xF4;
@@ -21,9 +52,9 @@ void BMP280_Init() {
     HAL_I2C_Master_Transmit(&hi2c1, BMP280_I2C_ADDRESS << 1, settings, 2, HAL_MAX_DELAY);
 }
 
-uint16_t dig_T1;
-int16_t dig_T2, dig_T3;
-
+/**
+ * @brief Liest die Kalibrierungsdaten des BMP280 aus dem Speicher.
+ */
 void BMP280_ReadCalibration() {
     uint8_t calib[6];
     uint8_t reg = 0x88;
@@ -34,6 +65,10 @@ void BMP280_ReadCalibration() {
     dig_T3 = (calib[5] << 8) | calib[4];
 }
 
+/**
+ * @brief Liest den Rohwert der Temperatur aus dem BMP280.
+ * @return Roh-Temperaturwert aus den Registern 0xFA-0xFC
+ */
 int32_t BMP280_ReadRawTemp() {
     uint8_t reg = 0xFA;
     uint8_t data[3];
@@ -44,6 +79,11 @@ int32_t BMP280_ReadRawTemp() {
     return temp_raw;
 }
 
+/**
+ * @brief Berechnet die Temperatur in °C aus dem Rohwert und Kalibrierungsdaten.
+ * @param temp_raw: Rohwert der Temperatur
+ * @return Temperatur in °C
+ */
 float BMP280_CalculateTemp(int32_t temp_raw) {
     int32_t var1, var2;
     float temperature;
@@ -55,6 +95,9 @@ float BMP280_CalculateTemp(int32_t temp_raw) {
     return temperature;
 }
 
+/**
+ * @brief Hauptprogramm: Initialisierung und kontinuierliche Temperaturmessung.
+ */
 int main(void) {
     HAL_Init();
     SystemClock_Config();
@@ -66,15 +109,30 @@ int main(void) {
     BMP280_ReadCalibration();
 
     while (1) {
+        // Rohwert der Temperatur vom BMP280 auslesen
         int32_t temp_raw = BMP280_ReadRawTemp();
+
+        // Temperaturwert mit den Kalibrierungsdaten berechnen
         float temp = BMP280_CalculateTemp(temp_raw);
+
+        // Temperatur in eine Ganzzahl umwandeln (nur den ganzzahligen Anteil verwenden)
         int temp_int = (int)temp;
+
+        // Temperaturwert als Zeichenkette formatieren und in das Datenpuffer-Array speichern
         size = sprintf((char *)Data, "Temperature: %d °C\r\n", temp_int);
+
+        // Den formatierten Temperaturwert über USB CDC an den PC senden
         CDC_Transmit_FS(Data, size);
+
+        // Kurze Pause, um die Abtastrate auf 10 Messungen pro Sekunde zu begrenzen
         HAL_Delay(100);
     }
+
 }
 
+/**
+  * AUTO GENERATED CODE
+  */
 void SystemClock_Config(void) {
   RCC_OscInitTypeDef RCC_OscInitStruct = {0};
   RCC_ClkInitTypeDef RCC_ClkInitStruct = {0};
