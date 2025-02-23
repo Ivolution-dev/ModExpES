@@ -44,8 +44,8 @@ Der Arbeitsplan soll helfen Struktur und Ordnung in das Projekt zu bringen. Auf 
     - [x] 6.1 Durchführen der Hardwaretests
     - [x] 6.2 Durchführen der Softwaretests
     - [x] 6.3 Entwickeln eines Demoskripts
+    - [x] 6.4 Verbesserungsvorschläge
 - [x] **7. Evaluation**
-    - [x] Retrospektive
-    - [x] Verbesserungsvorschläge
+
 
 \newpage

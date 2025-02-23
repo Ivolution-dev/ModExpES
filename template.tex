@@ -1,25 +1,26 @@
 $passoptions.latex()$
 \documentclass[
-$if(fontsize)$
-  $fontsize$,
-$endif$
-$if(papersize)$
-  $papersize$paper,
-$endif$
-$for(classoption)$
-  $classoption$$sep$,
-$endfor$
-]{$documentclass$}
-$if(beamerarticle)$
-\usepackage{beamerarticle} % needs to be loaded first
-$endif$
+  11pt, % Schriftgröße
+  a4paper, % Papierformat
+]{article} % Dokumentklasse, hier als Beispiel 'article'
+
 \usepackage{xcolor}
 \usepackage{float}
-$if(geometry)$
-\usepackage[$for(geometry)$$geometry$$sep$,$endfor$]{geometry}
-$endif$
+\usepackage{geometry}
+\geometry{
+  includeheadfoot,
+  margin=2cm,
+  left=4cm,
+  top=0cm,
+  headheight=2.5cm,
+  footskip=1cm
+}
+\usepackage{helvet} % Arial als Schriftart
+\renewcommand{\rmdefault}{phv} % setzt Arial als Schriftart für den Text
+\usepackage{setspace} % für Zeilenabstand
+\setstretch{1.0} % Zeilenabstand 1.0
 \usepackage{amsmath,amssymb}
-\usepackage{pdfpages}
+
 $--
 $-- section numbering
 $--
@@ -28,28 +29,19 @@ $if(numbersections)$
 $else$
 \setcounter{secnumdepth}{-\maxdimen} % remove section numbering
 $endif$
+
 $fonts.latex()$
 $common.latex()$
-$for(header-includes)$
-$header-includes$
-$endfor$
 $after-header-includes.latex()$
 $hypersetup.latex()$
 
-$if(title)$
-\title{$title$$if(thanks)$\thanks{$thanks$}$endif$}
-$endif$
-$if(subtitle)$
-\usepackage{etoolbox}
-\makeatletter
-\providecommand{\subtitle}[1]{% add subtitle to \maketitle
-  \apptocmd{\@title}{\par {\large #1 \par}}{}{}
-}
-\makeatother
-\subtitle{$subtitle$}
-$endif$
-\author{$for(author)$$author$$sep$ \and $endfor$}
-\date{$date$}
+\usepackage{titlesec} % für die Anpassung von Überschriften
+
+% Überschriften anpassen
+\titleformat{\section}[block]{\bfseries\Large}{\thesection}{1em}{}
+\titleformat{\subsection}[block]{\bfseries\large}{\thesubsection}{1em}{}
+\titleformat{\subsubsection}[block]{\bfseries\normalsize}{\thesubsubsection}{1em}{}
+\titleformat{\paragraph}[block]{\bfseries\normalsize}{\theparagraph}{1em}{}
 
 \begin{document}
 $if(has-frontmatter)$

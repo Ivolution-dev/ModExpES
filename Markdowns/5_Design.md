@@ -4,30 +4,40 @@
 
 ### 5.1.1 Externe Spannungsversorgung zu 5V 
 
-Das Board soll über eine externe Spannungsversorgung versorgt werden könnnen. Dafür gibt es einen DC Stromstecker auf dem Board, welcher einen Außendurchmesser von 6mm hat und einen Innendurchmesser von 2mm (U11 im Blockschaltbild).
+Das Board soll über eine externe Spannungsversorgung versorgt werden können. Dafür gibt es einen DC Stromstecker auf dem Board, welcher einen Außendurchmesser von 6mm hat und einen Innendurchmesser von 2mm (U11 im Blockschaltbild).
 
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.8\textwidth]{Bilder/Module/EXT_5V_SWITCH.png}
-    \caption{Blockschaltbild externe Spannungsversorgung zu 5V}
+    \caption{Blockschaltbild externe Spannungsversorgung zu 5V\textsuperscript{9}}
 \end{figure}
 
 
 Um gegen falsche Polarität zu schützen, ist hinter dem Stromanschluss direkt eine Diode verbaut, welche nur in die richtige Richtung Spannung durchlässt. Daher ist der Stromkreis nur bei richtiger Polarität geschlossen. Als zweiter Sicherheitsmechanismus wird gegen Überstrom eine Sicherung benutzt, welche auch aus dem Automobilbereich bekannt ist. Das Board ist auf maximal 2A ausgelegt, daher sollte auf dem Steckplatz F1 maximal eine Sicherung mit der Größe 2A verbaut werden. Als dritten und letzten Sicherheitsmechanismus in diesem Blockschaltbild ist ein Überspannungsschutz (D4) verbaut. Dieser öffnet, sobald die maximale Spannung von 18V überschritten wird, und leitet die Überspannung zu Ground ab, damit keine Komponenten beschädigt werden, falls eine zu hohe Spannung angelegt wird.
 
-Eine weitere wichtige Komponente ist das Relais (K1), welches bei Unterbrechung der Spannungsversorgung zum Mikrocontroller – sei es durch Ausschalten des Schalters (SW1), Durchbrennen einer Sicherung (FH1 oder FH2) oder indem per Software der Relay-Pin auf Low gestellt wird – die externe Spannungsversorgung zum unteren Kontakt ausschaltet. Der Zweck des Schalters besteht darin, die komplette Spannungsversorgung zum Steckboard zu unterbrechen, sodass aufgebaute Schaltungen ohne Risiko, einen Kurzschluss zu erzeugen, aufgebaut oder abgeändert werden können. 
+Eine weitere wichtige Komponente ist das Relais (K1), welches bei Unterbrechung der Spannungsversorgung zum Mikrocontroller – sei es durch Ausschalten des Schalters (SW1), Durchbrennen einer Sicherung (FH1 oder FH2) oder indem per Software der Relay-Pin auf low gestellt wird – die externe Spannungsversorgung zum unteren Kontakt ausschaltet. Der Zweck des Schalters besteht darin, die komplette Spannungsversorgung zum Steckboard zu unterbrechen, sodass aufgebaute Schaltungen ohne Risiko, einen Kurzschluss zu erzeugen, aufgebaut oder abgeändert werden können. 
 
-Die Steuerung des Relais über den Relay-Pin erfolgt über einen MOSFET, der je nach Signal den Stromkreis schließen oder geöffnet lassen kann. Das Relais ist am Mikrocontroller an Port PD2 angeschlossen, und damit keine Fehlströme das Relais aus Versehen einschalten, ist auf der Leitung zum Mikrocontroller ein Pull-Down-Widerstand (R30) verbaut. Da das Relais über eine Spule verfügt, müssen mögliche Spannungsspitzen mit der Diode U10 abgeleitet werden, um andere Komponenten, wie zum Beispiel den Mikrocontroller, zu schützen.
+Die Steuerung des Relais über den Relay-Pin erfolgt über einen MOSFET, der je nach Signal den Stromkreis schließen oder geöffnet lassen kann. Das Relais ist am Mikrocontroller an Port PD2 angeschlossen. Damit keine Fehlströme das Relais versehentlich einschalten, ist auf der Leitung zum Mikrocontroller ein Pull-Down-Widerstand (R30) verbaut. Da das Relais über eine Spule verfügt, müssen mögliche Spannungsspitzen mit der Diode U10 abgeleitet werden, um andere Komponenten, wie zum Beispiel den Mikrocontroller, zu schützen.
 
-![Typische Anwendung aus dem Datenblatt des BL8072COTR50](Bilder/Datenblatt/BL8072COTR33_TA.png)
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Bilder/Datenblatt/BL8072COTR33_TA.png}
+    \caption{Typische Anwendung aus dem Datenblatt des BL8072COTR50\textsuperscript{7}}
+\end{figure}
 
 Aus dem Datenblatt können wir eine empfohlene Schaltung für den Spannungswandler entnehmen. Diese besteht aus zwei Keramikkondensatoren der Größe 1µF und kann im oberen Blockschaltbild mit den Kondensatoren C1 und C2 wiedergefunden werden. Der BL8072COTR50 kann unter bestimmten vorausetzungen eine maximale Stromstärke von 2A bereitstellen, welche genau den benötigten Leistungsanforderungen für das Board entspricht. Des Weiteren wird nach der Spannungsumwandlung wieder eine Sicherung verbaut, welche im Blockschaltbild unter FH2 zu finden ist.
 
-![Lastregulierung des BL8072COTR50](Bilder/Datenblatt/BL8072COTR50_LR.png)
+\newpage 
+
+\begin{figure}[h!]
+    \centering
+    \includegraphics[width=0.8\textwidth]{Bilder/Datenblatt/BL8072COTR50_LR.png}
+    \caption{Lastregulierung des BL8072COTR50\textsuperscript{7}}
+\end{figure}
 
 Wie man aus dem Datenblatt erkennen kann, kann der Spannungswandler nur 2A liefern, solange $V_{in}$ zwischen 6V und 7V liegt. Alle Spannungen über 7V führen zu einer geringeren Stromstärke, die bis auf 1.5A Ausgangsleistung abfällt. Um das komplette Potenzial zu nutzen, wird daher eine Spannung von 6V empfohlen.
 
-Um auch Strom vom USB-Port erhalten zu können, speist die USB-Buchse über das Netz VBUS-USB Strom hinter den 5-V-Spannungswandler ein. Damit kein Strom zurück zum über USB angeschlossenen Gerät fließt, ist die Diode U9 verbaut. Gleiches gilt für den Spannungswandler, der nicht über den Output mit Strom versorgt werden soll, wenn nur ein USB-Gerät angeschlossen ist, ohne ein Netzteil. Daher ist die Diode U7 vorhanden.
+Um auch Strom vom USB-Port erhalten zu können, speist die USB-Buchse über das Netz VBUS-USB Strom hinter den 5-V-Spannungswandler ein. Damit kein Strom zurück zum über USB angeschlossenen Gerät fließt, ist die Diode U9 verbaut. Gleiches gilt für den Spannungswandler, der nicht über den Ausgangspin mit Strom versorgt werden soll, wenn nur ein USB-Gerät angeschlossen ist, ohne ein Netzteil. Daher ist die Diode U7 vorhanden.
 
 Hinter dieser Sicherung befindet sich eine LED, welche leuchtet, solange 5V verfügbar sind. Die Größe des Vorwiderstands kann mithilfe des Ohm'schen Gesetzes berechnet werden, wobei die LED laut Datenblatt eine Forward Voltage (VF) von 2.3V hat und mit 3–5mA Strom leuchten soll.
 
@@ -56,7 +66,7 @@ Neben der 5V Spannungsversorgung wird ebenfalls für den Mikrocontroller und ext
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.6\textwidth]{Bilder/Module/5V_TO_3.3V.png}
-    \caption{Blockschaltbild 5V zu 3.3V}
+    \caption{Blockschaltbild 5V zu 3.3V\textsuperscript{9}}
 \end{figure}
 
 Der BL8072COTR33 hat genauso wie der 5V-Spannungswandler eine maximale Stromstärke von 2A und kann, solange der erste Spannungswandler 2A liefern kann, diese ebenfalls liefern. Dazu bietet er dieselbe empfohlene Schaltung mit zwei Keramikkondensatoren (C3 und C4) der Größe 1µF wie beim BL8072COTR50.
@@ -64,7 +74,7 @@ Der BL8072COTR33 hat genauso wie der 5V-Spannungswandler eine maximale Stromstä
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.7\textwidth]{Bilder/Datenblatt/BL8072COTR33_LR.png}
-    \caption{Lastregulierung des BL8072COTR33}
+    \caption{Lastregulierung des BL8072COTR33\textsuperscript{8}}
 \end{figure}
 
 \newpage
@@ -86,7 +96,7 @@ Die USB-Schnittstelle ist im Grundsatz nur eine Buchse, welche laut Datenblatt a
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.7\textwidth]{Bilder/Module/USB_C_CON.png}
-    \caption{Blockschaltbild USB-C Buchse}
+    \caption{Blockschaltbild USB-C Buchse\textsuperscript{9}}
 \end{figure}
 
 Die Datenanschlüsse DN1 und DN2 sowie DP1 und DP2 werden direkt mit dem Mikrocontroller verbunden, um über diesen Port eine Software auf das Board zu laden.
@@ -98,12 +108,12 @@ Die Datenanschlüsse DN1 und DN2 sowie DP1 und DP2 werden direkt mit dem Mikroco
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.7\textwidth]{Bilder/Module/RESET.png}
-    \caption{Blockschaltbild Reset Schaltung}
+    \caption{Blockschaltbild Reset Schaltung\textsuperscript{9}}
 \end{figure}
 
 Die Reset-Schaltung wurde nach der empfohlenen Schaltung aus dem Datenblatt des Mikrocontrollers gebaut.
 
-![Empfohlene Schaltung aus dem Datenblatt](Bilder/Datenblatt/RESET.png)
+![Empfohlene Schaltung aus dem Datenblatt$\textsuperscript{6}$](Bilder/Datenblatt/RESET.png)
 
 Diese hat zwei Anforderungen, die erfüllt werden müssen. Einmal sieht die Schaltung vor, dass die Verbindung gegen ungewollte Signale geschützt werden muss, was wir durch den Einsatz eines Kondensators (C5) erreichen. Des Weiteren muss beim Betätigen des Knopfes die Spannung laut Datenblatt am Reset-Pin unter 0.3V fallen, was durch eine direkte Masseverbindung erreicht werden kann.
 
@@ -113,17 +123,17 @@ Diese hat zwei Anforderungen, die erfüllt werden müssen. Einmal sieht die Scha
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.7\textwidth]{Bilder/Module/BOOT_MODES.png}
-    \caption{Blockschaltbild Boot Modes}
+    \caption{Blockschaltbild Boot Modes\textsuperscript{9}}
 \end{figure}
 
-Wie in dem Schaubild erkennbar ist, ist Boot0 über einen $10k\Omega$ Pull-Down-Widerstand mit Ground verbunden. So ist, solange kein Jumper gesetzt ist, Boot0 low und der Mikrocontroller startet vom Haupt-Flash-Speicher. Wenn man allerdings den Jumper setzt, wird Boot0 hochgezogen, was zur Folge hat, dass der Mikrocontroller vom Systemspeicher aus startet. Dieser Modus wird verwendet, um vom USB-Port aus flashen zu können.
+Wie in dem Schaltbild erkennbar ist, ist Boot0 über einen $10k\Omega$ Pull-Down-Widerstand mit Ground verbunden. So ist, solange kein Jumper gesetzt ist, Boot0 low und der Mikrocontroller startet vom Haupt-Flash-Speicher. Wenn man allerdings den Jumper setzt, wird Boot0 hochgezogen, was zur Folge hat, dass der Mikrocontroller vom Systemspeicher aus startet. Dieser Modus wird verwendet, um vom USB-Port aus flashen zu können.
 
 ### 5.1.6 Debug Schnittstelle
 
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.7\textwidth]{Bilder/Module/DEBUG.png}
-    \caption{Blockschaltbild Debug Schnittstelle}
+    \caption{Blockschaltbild Debug Schnittstelle\textsuperscript{9}}
 \end{figure}
 
 Der Debugger wurde nach einem von der Hochschule vorgegebenen Pinout entworfen. Die Hochschule hat einen Segger J-Link mit einem PCB-Adapter für genau das entworfene Pinout. Ebenfalls sind dies alle nötigen Pins, um auch schnell und einfach über einen anderen Mikrocontroller debuggen zu können.
@@ -133,7 +143,7 @@ Der Debugger wurde nach einem von der Hochschule vorgegebenen Pinout entworfen. 
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.5\textwidth]{Bilder/Module/GPIO.png}
-    \caption{Blockschaltbild digitale Ein- und Ausgänge}
+    \caption{Blockschaltbild digitale Ein- und Ausgänge\textsuperscript{9}}
 \end{figure}
 
 Die digitalen Ein- und Ausgänge sind mit den Mikrocontroller Pins PA8-10 und PC0-4 mit einem Widerstand direkt verbunden. Ein genaueres Pinout findet man nochmal unter der Sektion "Mikrocontroller". Die Widerstände R18-R25 sollen gegen Kurzschlüsse bzw. Überstrom schützen und begrenzen den Strom auf unter 25 mA pro Pin. Die 25mA Grenze kann aus dem Datenblatt des STM32 unter "Table 12. Current characteristics" entnommen werden.
@@ -141,7 +151,7 @@ Die digitalen Ein- und Ausgänge sind mit den Mikrocontroller Pins PA8-10 und PC
 \begin{figure}[h!]
     \centering
     \includegraphics[width=1\textwidth]{Bilder/Datenblatt/STM32MAX.png}
-    \caption{Datenblatt STM32 Table 12.}
+    \caption{Datenblatt STM32 Table 12.\textsuperscript{6}}
 \end{figure}
 
 \newpage
@@ -160,7 +170,7 @@ Der Strom ist damit pro Pin auf 22mA begrenzt und kann somit den Mikrocontroller
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.5\textwidth]{Bilder/Module/PWM_CON.png}
-    \caption{Blockschaltbild PWM Verbinder}
+    \caption{Blockschaltbild PWM Verbinder\textsuperscript{9}}
 \end{figure}
 
 Die PWM-Ein- und Ausgänge sind ebenfalls mit einem 150$\Omega$-Widerstand verbunden, um diese abzusichern. Die PWM-Anschlüsse sind an den Pins PC6-9 mit dem Mikrocontroller verbunden. Ein genaueres Pinout findet sich unter der Sektion "Mikrocontroller". Die Berechnung des Widerstands ist dieselbe wie bei den digitalen Ein- und Ausgängen und kann von dort entnommen werden.
@@ -172,27 +182,27 @@ Die PWM-Ein- und Ausgänge sind ebenfalls mit einem 150$\Omega$-Widerstand verbu
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.7\textwidth]{Bilder/Module/I2C.png}
-    \caption{Blockschaltbild I2C Anschluss}
+    \caption{Blockschaltbild I2C Anschluss\textsuperscript{9}}
 \end{figure}
 
-Die I2C-Schnittstelle wurde nach dem Pinout für Groove-Sensorsysteme entwickelt. Über dieses Pinout ist es möglich, direkt Module in den Header zu stecken, um diese zu nutzen. SCL und SDA wurden über einen 4,7k$\Omega$ Pull-up-Widerstand zu 5V verbunden und haben ebenfalls wieder einen 150$\Omega$ Widerstand, um gegen Kurzschlüsse und Überstrom abgesichert zu sein. Am Mikrocontroller ist SCL an PB8 und SDA an PB9 angeschlossen.
+Die I2C-Schnittstelle wurde nach dem Pinout für Grove-Sensorsysteme\textsuperscript{10} entwickelt. Über dieses Pinout ist es möglich, Module direkt mit einem Kabel in den Header zu stecken, um diese zu nutzen. SCL und SDA wurden über einen 4,7k$\Omega$ Pull-up-Widerstand zu 5V verbunden und haben ebenfalls wieder einen 150$\Omega$ Widerstand, um gegen Kurzschlüsse und Überstrom abgesichert zu sein. Am Mikrocontroller ist SCL an PB8 und SDA an PB9 angeschlossen.
 
 ### 5.1.10 SPI Schnittstelle
 
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.6\textwidth]{Bilder/Module/SPI.png}
-    \caption{Blockschaltbild SPI Anschluss}
+    \caption{Blockschaltbild SPI Anschluss\textsuperscript{9}}
 \end{figure}
 
-Die SPI-Schnittstelle ist genau wie die I2C-Schnittstelle auf der Pinout-Basis der Groove-Sensorsysteme entwickelt worden. Die Datenleitungen wurden auch über einen 150$\Omega$ Widerstand abgesichert und sind so sicher gegen Kurzschlüsse und Überspannung. Das genaue Pinout am Mikrocontroller kann unter der Sektion 'Mikrocontroller' gefunden werden.
+Die SPI-Schnittstelle ist genau wie die I2C-Schnittstelle auf der Pinout-Basis der Grove-Sensorsysteme\textsuperscript{10} entwickelt worden. Die Datenleitungen wurden auch über einen 150$\Omega$ Widerstand abgesichert und sind so sicher gegen Kurzschlüsse und Überspannung. Das genaue Pinout am Mikrocontroller kann unter der Sektion 'Mikrocontroller' gefunden werden.
 
 ### 5.1.11 Digital Analog Wandler
 
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.5\textwidth]{Bilder/Module/DAC.png}
-    \caption{Blockschaltbild Digital Analog Wandler}
+    \caption{Blockschaltbild Digital Analog Wandler\textsuperscript{9}}
 \end{figure}
 
 Der Digital-Analog-Wandler ist an PA4 und PA5 angeschlossen und kann eine Spannung von bis zu 3.3V erzeugen. Die Datenleitungen sind wieder mit einem 150$\Omega$ Widerstand abgesichert und ansonsten direkt mit dem Header verbunden.
@@ -202,7 +212,7 @@ Der Digital-Analog-Wandler ist an PA4 und PA5 angeschlossen und kann eine Spannu
 \begin{figure}[h!]
     \centering
     \includegraphics[width=1\textwidth]{Bilder/Module/ANALOG_CONVERTER.png}
-    \caption{Blockschaltbild Analog Digital Wandler}
+    \caption{Blockschaltbild Analog Digital Wandler\textsuperscript{9}}
 \end{figure}
 
 Der Analog-Digital-Wandler besteht aus zwei Hauptkomponenten: einem Spannungsteiler und einem Operationsverstärker. Da der Spannungsteiler eine hohe Ausgangsimpedanz aufweist, wird vor ihm ein Operationsverstärker geschaltet, um eine niedrige Eingangsimpedanz zu gewährleisten. Diese niedrige Eingangsimpedanz sorgt dafür, dass das Signal durch den Spannungsteiler möglichst wenig beeinflusst wird. Die Wahl der Widerstände lässt sich mit der Spannungsteilerformel berechnen.
@@ -238,7 +248,7 @@ $R_1 = 0.515 * 10k\Omega \approx 5.1k\Omega$
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.4\textwidth]{Bilder/Module/PWR_OUT.png}
-    \caption{Blockschaltbild Stromanschlüsse}
+    \caption{Blockschaltbild Stromanschlüsse\textsuperscript{9}}
 \end{figure}
 
 Die Spannungsverbinder bestehen aus 5V, 3.3V, GND und einem Anschluss für ein externes Netzteil. Sie ermöglichen die Versorgung des Breadboards mit Spannung sowie den Betrieb externer Komponenten.
@@ -248,7 +258,7 @@ Die Spannungsverbinder bestehen aus 5V, 3.3V, GND und einem Anschluss für ein e
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.7\textwidth]{Bilder/Module/SCREW_CON.png}
-    \caption{Blockschaltbild Schraubklemmenverbinder}
+    \caption{Blockschaltbild Schraubklemmenverbinder\textsuperscript{9}}
 \end{figure}
 
 Die sechs Schraubklemmenverbinder, die jeweils mit einer 2A-Sicherung pro Leitung abgesichert sind, sind selbstrückstellend. Das heißt, sie unterbrechen den Stromfluss bei Überlast und schützen so die Leiterbahnen auf der Platine vor Schäden. Sobald die Sicherung abkühlt, stellt sie die Verbindung automatisch wieder her. Die Klemmen sind zum Anschließen von externen Netzteilen oder Signalgeneratoren gedacht, um Schrittmotoren oder andere Geräte zu versorgen.
@@ -258,7 +268,7 @@ Die sechs Schraubklemmenverbinder, die jeweils mit einer 2A-Sicherung pro Leitun
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.5\textwidth]{Bilder/Module/BNC_CON.png}
-    \caption{Blockschaltbild BNC Verbinder}
+    \caption{Blockschaltbild BNC Verbinder\textsuperscript{9}}
 \end{figure}
 
 Die BNC-Verbinder dienen dem Anschluss eines Oszilloskops. Die Signale können direkt am Breadboard unter den BNC-Anschlüssen angeschlossen werden, wodurch ein besonders sauberer und übersichtlicher Aufbau ermöglicht wird. Diese Verbinder sorgen für eine saubere Signalübertragung und erleichtern die Messung sowie die Analyse von Schaltungen.
@@ -270,7 +280,7 @@ Die BNC-Verbinder dienen dem Anschluss eines Oszilloskops. Die Signale können d
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.9\textwidth]{Bilder/Module/PWR_CON.png}
-    \caption{Blockschaltbild Mikrocontroller Spannungsversorgung}
+    \caption{Blockschaltbild Mikrocontroller Spannungsversorgung\textsuperscript{9}}
 \end{figure}
 
 Die Spannungsversorgung wurde gemäß dem Datenblatt umgesetzt. 
@@ -278,19 +288,19 @@ Die Spannungsversorgung wurde gemäß dem Datenblatt umgesetzt.
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.9\textwidth]{Bilder/Datenblatt/PWRMIC.png}
-    \caption{Ausschnitt STM32 Datenblatt Sektion 5.1.6 Power supply scheme}
+    \caption{Ausschnitt STM32 Datenblatt Sektion 5.1.6 Power supply scheme\textsuperscript{6}}
 \end{figure}
 
 Erkennbar ist, dass für jeden VDD-Pin ein 100nF Kondensator empfohlen wird, ergänzt durch einen zusätzlichen 4,7µF Kondensator. Ebenso ist für jeden VDDA-Pin ein 100nF Kondensator mit einem zusätzlichen 1µF Kondensator vorgeschrieben.
 
-Da wir außerdem keine Batterie nutzen wollen, wurden VBAT sowie die VSS- und VSSA-Pins mit Masse verbunden.
+Da wir außerdem keine Batterie nutzen wollen, wurde der VBAT-Pin ebenso wie die Massepins VSS und VSSA mit Masse verbunden.
 
 ### 5.1.17 Mikrocontroller
 
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.9\textwidth]{Bilder/Module/MC.png}
-    \caption{Blockschaltbild Mikrocontroller}
+    \caption{Blockschaltbild Mikrocontroller\textsuperscript{9}}
 \end{figure}
 
 Der Mikrocontroller wurde gemäß den Anforderungen des Datenblatts angeschlossen. Die Kondensatoren C13 und C14 dienen zur Stabilisierung der Mikrocontrollerspannung und wurden entsprechend den Vorgaben aus "Table 16. VCAP_1/VCAP_2 operating conditions" gewählt.
@@ -298,7 +308,7 @@ Der Mikrocontroller wurde gemäß den Anforderungen des Datenblatts angeschlosse
 \begin{figure}[h!]
     \centering
     \includegraphics[width=0.9\textwidth]{Bilder/Datenblatt/VCAPS.png}
-    \caption{Datenblatt STM32 Table 16.}
+    \caption{Datenblatt STM32 Table 16.\textsuperscript{6}}
 \end{figure}
 
 Des Weiteren wurde an Pin PD2 das Relais für die externe Spannungsversorgung angeschlossen. Weitere Informationen zu dieser Schaltung sind in Abschnitt 5.1.1 zu finden. Die On-Board-LED wurde an Pin PB1 mit einem 270$\Omega$ Vorwiderstand angeschlossen, um die Helligkeit zu begrenzen. Die Wahl des Widerstands basiert auf denselben Grundlagen wie in Kapitel 5.1.2.
@@ -307,7 +317,7 @@ Abschließend musste, um über USB flashen zu können, ein 8 MHz Quarz eingebaut
  \begin{figure}[h!]
     \centering
     \includegraphics[width=0.9\textwidth]{Bilder/Datenblatt/QUARZ.png}
-    \caption{Datenblatt STM32 Fig 32.}
+    \caption{Datenblatt STM32 Fig 32.\textsuperscript{6}}
 \end{figure}
 
 
@@ -341,9 +351,11 @@ NRST & RESET        &                       &                            &      
  
 ### 5.1.18 Montageplatte
 
-Die Montageplatte soll das selbst designte PCB mit dem Breadboard verbinden. Als Auswahlkriterium muss ein Material gewählt werden, welches bestimmte Anforderungen erfüllt. Zum einen muss dieses mit dem Lasercutter der Hochschule geschnitten werden können. Ebenfalls darf die Dicke der Montageplatte nicht mehr als 2 mm betragen, da die Schrauben, die das PCB mit der Montageplatte verbinden, nicht länger als 4 mm sind. Zudem sollte das Material möglichst starr sein, um die nötige Stabilität für das PCB und das Breadboard zu bieten.
+Die Montageplatte soll das selbst designte PCB mit dem Breadboard verbinden. Als Auswahlkriterium muss ein Material gewählt werden, welches bestimmte Anforderungen erfüllt. Zum einen muss dieses mit dem Lasercutter der Hochschule geschnitten werden können. Ebenfalls darf die Dicke der Montageplatte nicht mehr als 2mm betragen, da die Schrauben, die das PCB mit der Montageplatte verbinden, nicht länger als 4mm sind. Zudem sollte das Material möglichst starr sein, um die nötige Stabilität für das PCB und das Breadboard zu bieten.
 
 Ein Material welches diese Anforderungen erfüllt ist zum Beispiel orginales Plexiglas. Dieses kann nicht nur mit dem Lasercutter sauber geschnitten werden, sondern bietet auch die nötige stabilität und ist in vielen Farben verfügbar.
+
+\newpage
 
 Meine Wahl fällt auf durchsichtiges Plexiglas, damit, falls ein Kurzschluss oder sonstige Probleme auf dem PCB auftreten, diese auch von hinten begutachtet werden können. Außerdem passt es designtechnisch gut zu dem weißen Stil des ganzen Projekts.
 
@@ -370,7 +382,7 @@ Für 2A: $W=\frac{74.16}{1*1.378} \approx 53.81mil \approx 1.36mm$
 
 Für 1A: $W=\frac{42.39}{1*1.378} \approx 30.76mil \approx 0.78mm$
 
-Somit wurde für die 2A-Leiterbahnen eine Breite von 2 mm und für die 1A-Leiterbahnen eine Breite von 1 mm gewählt.
+Somit wurde für die 2A-Leiterbahnen eine Breite von 2mm und für die 1A-Leiterbahnen eine Breite von 1mm gewählt.
 
 \newpage 
 
@@ -400,10 +412,10 @@ Da dieses Board für die Entwicklung und den Einsatz an der Hochschule vorgesehe
 \caption{Kostenübersicht der Bauteile}
 \end{table}
 
-
+\newpage
 
 ## 5.2 Softwaredesign
-Die Software wurde, wie im Konzept vorgeschlagen, in der STM32CubeIDE entwickelt. Die Tests können geöffnet werden, indem der Ordner "Software" als Workspace in der IDE geöffnet wird. Man bekommt dann die acht Softwaretests, welche sich nach dem flashen so verhalten, wie im Code und in der Dokumentation beschrieben. Die Tests können ebenfalls als Basis für zukünftige Softwareentwicklungen dienen und gleichzeitig zeigen, was das Board leisten kann.
+Die Software wurde, wie im Konzept vorgeschlagen, in der STM32CubeIDE\textsuperscript{11} entwickelt. Die Tests können geöffnet werden, indem der Ordner "Software" als Workspace in der IDE geöffnet wird. Man bekommt dann die acht Softwaretests, welche sich nach dem flashen so verhalten, wie im Code und in der Dokumentation beschrieben. Die Tests können ebenfalls als Basis für zukünftige Softwareentwicklungen dienen und gleichzeitig zeigen, was das Board leisten kann.
 
 ### 5.2.1 DAC_ADC_TEST
 Dieser Test testet die Funktionalität des Digital-Analog-Wandlers (DAC) und des Analog-Digital-Wandlers (ADC) des ModExpES. Der DAC erzeugt eine analoge Spannung, die an den ADC-Eingang zurückgeführt wird. Die ausgelesenen ADC-Werte werden zur PWM-Steuerung genutzt, um daraus wieder ein digitales Signal zu erzeugen. Das digitale Signal kann an PWM1 gemessen werden, während gleichzeitig die On-Board-LED als Ausgabe genutzt wird.
@@ -427,14 +439,14 @@ Ein Encoder ist mit GPIO1 und GPIO2 verbunden. Zusätzlich kann auf dem Breadboa
 - Die Ausgabe erfolgt auf der On-Board LED und dem PWM1 Ausgang.\
 
 ### 5.2.3 GPIO_TEST
-Dieser Test testet die Funktionalität der digitalen GPIO-Ausgänge. Die Pins PA8, PA9 und PA10 sowie PC0 bis PC4 werden als digitale Ausgänge konfiguriert. Das Programm setzt alle Pins zunächst auf LOW und schaltet sie anschließend nacheinander auf HIGH.
+Dieser Test testet die Funktionalität der digitalen GPIO-Ausgänge. Die Pins PA8, PA9 und PA10 sowie PC0 bis PC4 werden als digitale Ausgänge konfiguriert. Das Programm setzt alle Pins zunächst auf low und schaltet sie anschließend nacheinander auf high.
 
 **Versuchsaufbau:**
 Schließe GPIO1 bis 8 an einem Ausgabegerät der Wahl an. Als Beipsiel wurde in diesen Test das Modul H-Brücke V1.0 von der Hochschule benutzt.
 
 **Ablauf:**\
-- Alle GPIO-Pins werden initial auf LOW gesetzt.\
-- Danach werden die Pins PA8, PA9 und PA10 jeweils nacheinander mit einer kurzen Verzögerung auf HIGH gesetzt.\
+- Alle GPIO-Pins werden initial auf low gesetzt.\
+- Danach werden die Pins PA8, PA9 und PA10 jeweils nacheinander mit einer kurzen Verzögerung auf high gesetzt.\
 - Anschließend werden die Pins PC0 bis PC4 in gleicher Weise aktiviert.\
 - Der Vorgang wird kontinuierlich in einer Endlosschleife wiederholt.\
 
@@ -451,7 +463,7 @@ Ein Computer muss per USB-C an das Board angeschlossen werden. Der BMP280 muss a
 - Sendet die Temperaturwerte alle 100 ms über die USB-Schnittstelle.\
 
 ### 5.2.5 LED_BLINK
-Dieser Test steuert einen digitalen Ausgang für ein Relais sowie eine LED. Der Pin PD2 wird dauerhaft auf HIGH gesetzt, um das Relais einzuschalten. Der Pin PB1 wird periodisch getoggelt, um die On-Board LED blinken zu lassen.
+Dieser Test steuert einen digitalen Ausgang für ein Relais sowie eine LED. Der Pin PD2 wird dauerhaft auf high gesetzt, um das Relais einzuschalten. Der Pin PB1 wird periodisch getoggelt, um die On-Board LED blinken zu lassen.
 
 **Versuchsaufbau:**
 Nicht benötigt.
@@ -480,7 +492,7 @@ Nicht benötigt.
 - PD2 wird periodisch alle 500 ms getoggelt, wodurch das Relais blinkt.\
 
 ### 5.2.8 SPI_TEST
-Dieser Test steuert einen MCP4922 Digital-Analog-Wandler (DAC) über SPI und liest kontinuierlich den Wert eines ADCs aus, welcher mit dem DAC verbunden ist. Der ADC-Wert wird verwendet, um die PWM-Ausgangswerte auf den Pins PWM1 und der On-Board LED zu steuern, basierend auf dem ADC-Eingang. An PWM1 kann ein Oszilloskop angeschlossen werden, um das Signal zu visualisieren. Die ADC-Werte werden kontinuierlich überwacht, um den minimalen und maximalen Wert zu ermitteln und den PWM-Ausgang entsprechend zu skalieren.
+Dieser Test steuert einen MCP4922 Digital-Analog-Wandler (DAC) über SPI und liest kontinuierlich den Wert eines ADCs aus, welcher mit dem DAC verbunden ist. Der ADC-Wert wird verwendet, um die PWM-Ausgangswerte auf den Pins PWM1 und der On-Board LED zu steuern, basierend auf dem ADC-Eingang. Die ADC-Werte werden kontinuierlich überwacht, um den minimalen und maximalen Wert zu ermitteln und den PWM-Ausgang entsprechend zu skalieren.
 
 **Versuchsaufbau:**
 Der MCP4922 DAC wird über die SPI-Schnittstelle an das ModExpES angeschlossen. Der Ausgang des DAC, welcher die analoge Spannung erzeugt, wird direkt mit dem ADC4 verbunden. So wird die vom DAC erzeugte Spannung vom ADC4 gemessen. Um das Signal visuell zu überprüfen, kann ein Oszilloskop an den PWM1-Ausgang, sowie den ADC4-Eingang angeschlossen werden.
