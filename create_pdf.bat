@@ -9,4 +9,4 @@ for %%f in (.\Markdowns\*.md) do (
 pandoc %pandoc_files% -o .\Abgabe\parts\ba.pdf --toc --template=template.tex
 
 
-pdftk .\Abgabe\parts\deckblatt.pdf .\Abgabe\parts\ba.pdf Fertigung\PCB\Schematic_ModExpES_2025-01-24.pdf .\Abgabe\parts\front_pcb.pdf .\Abgabe\parts\back_pcb.pdf \Fertigung\Montageplatte\Montageplatte_TechnicalDrawing.pdf cat output .\Abgabe\Bachelorarbeit.pdf
+pdftk .\Abgabe\parts\deckblatt.pdf .\Abgabe\parts\erklaerung.pdf .\Abgabe\parts\ba.pdf Fertigung\PCB\Schematic_ModExpES_2025-01-24.pdf .\Abgabe\parts\front_pcb.pdf .\Abgabe\parts\back_pcb.pdf \Fertigung\Montageplatte\Montageplatte_TechnicalDrawing.pdf cat output .\Abgabe\Bachelorarbeit.pdf
