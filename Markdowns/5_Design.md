@@ -355,6 +355,8 @@ Die Montageplatte soll das selbst designte PCB mit dem Breadboard verbinden. Als
 
 Ein Material welches diese Anforderungen erfüllt ist zum Beispiel orginales Plexiglas. Dieses kann nicht nur mit dem Lasercutter sauber geschnitten werden, sondern bietet auch die nötige stabilität und ist in vielen Farben verfügbar.
 
+\newpage
+
 Meine Wahl fällt auf durchsichtiges Plexiglas, damit, falls ein Kurzschluss oder sonstige Probleme auf dem PCB auftreten, diese auch von hinten begutachtet werden können. Außerdem passt es designtechnisch gut zu dem weißen Stil des ganzen Projekts.
 
 Die genaue technische Zeichnung der Montageplatte findet man in 8.2.
@@ -413,7 +415,7 @@ Da dieses Board für die Entwicklung und den Einsatz an der Hochschule vorgesehe
 \newpage
 
 ## 5.2 Softwaredesign
-Die Software wurde, wie im Konzept vorgeschlagen, in der STM32CubeIDE entwickelt. Die Tests können geöffnet werden, indem der Ordner "Software" als Workspace in der IDE geöffnet wird. Man bekommt dann die acht Softwaretests, welche sich nach dem flashen so verhalten, wie im Code und in der Dokumentation beschrieben. Die Tests können ebenfalls als Basis für zukünftige Softwareentwicklungen dienen und gleichzeitig zeigen, was das Board leisten kann.
+Die Software wurde, wie im Konzept vorgeschlagen, in der STM32CubeIDE\textsuperscript{11} entwickelt. Die Tests können geöffnet werden, indem der Ordner "Software" als Workspace in der IDE geöffnet wird. Man bekommt dann die acht Softwaretests, welche sich nach dem flashen so verhalten, wie im Code und in der Dokumentation beschrieben. Die Tests können ebenfalls als Basis für zukünftige Softwareentwicklungen dienen und gleichzeitig zeigen, was das Board leisten kann.
 
 ### 5.2.1 DAC_ADC_TEST
 Dieser Test testet die Funktionalität des Digital-Analog-Wandlers (DAC) und des Analog-Digital-Wandlers (ADC) des ModExpES. Der DAC erzeugt eine analoge Spannung, die an den ADC-Eingang zurückgeführt wird. Die ausgelesenen ADC-Werte werden zur PWM-Steuerung genutzt, um daraus wieder ein digitales Signal zu erzeugen. Das digitale Signal kann an PWM1 gemessen werden, während gleichzeitig die On-Board-LED als Ausgabe genutzt wird.

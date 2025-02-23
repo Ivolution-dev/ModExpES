@@ -30,6 +30,6 @@ Bei den Spannungswandlern, welche bis zu 2A ausgelegt sind, wird selbstverständ
 
 ## 4.2 Software
 
-Die Software soll möglichst einfach zu verstehen und gut dokumentiert sein. Sie soll als Grundlage für weitere Projekte dienen und zudem das Board nach der Herstellung auf seine Funktionalität prüfen. Die einfachste Möglichkeit, die Software zu entwickeln, ist die STM32CubeIDE, da diese speziell für den STM32 ausgelegt ist. Daher wird bei der Entwicklung der Testsoftware wahrscheinlich auf diese zurückgegriffen. Zusätzlich ist das Board besonders von Pinout her auf den J-Link-Debugger ausgelegt, weshalb dieser auch hier verwendet wird, um die Software aufzuspielen und zu debuggen.
+Die Software soll möglichst einfach zu verstehen und gut dokumentiert sein. Sie soll als Grundlage für weitere Projekte dienen und zudem das Board nach der Herstellung auf seine Funktionalität prüfen. Die einfachste Möglichkeit, die Software zu entwickeln, ist die STM32CubeIDE\textsuperscript{11}, da diese speziell für den STM32 ausgelegt ist. Daher wird bei der Entwicklung der Testsoftware wahrscheinlich auf diese zurückgegriffen. Zusätzlich ist das Board besonders von Pinout her auf den J-Link-Debugger ausgelegt, weshalb dieser auch hier verwendet wird, um die Software aufzuspielen und zu debuggen.
 
 \newpage
