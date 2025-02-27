@@ -1,0 +1,4 @@
+(fp_lib_table
+  (version 7)
+  (lib (name "ModExpES_465c83bf6db64cd99029b93e19b688e1")(type "KiCad")(uri "$(KIPRJMOD)/ModExpES_465c83bf6db64cd99029b93e19b688e1.pretty")(options "")(descr ""))
+)
